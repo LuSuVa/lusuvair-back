@@ -10,102 +10,148 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/** Entity representing a Section  */
+/**
+ * Entity representing a Section.
+ */
 @Entity
 @Table(name = "SECTION")
 public class Section {
-	
-	/** Id of the Section */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	/** Name of the Section */
-	private String name;
-	
-	/** Description of the Section */
-	private String description;
-	
-	/** Date and time when the section was created */
-	private LocalDateTime date;
-	
-	@ManyToOne
-	@JoinColumn(name = "ID_FORUM")
-	private Forum forum;
 
-	/** Constructor of the class Section */
-	public Section() {
-	}
+    /** Id of the Section */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	/** Getter of the id of the section
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+    /** Name of the Section */
+    private String name;
 
-	/** Setter of the id of the section
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    /** Description of the Section */
+    private String description;
 
-	/** Getter of the name of the section
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /** Date and time when the section was created */
+    private LocalDateTime date;
 
-	/** Setter of the name of the section
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** The forum to which the section belongs */
+    @ManyToOne
+    @JoinColumn(name = "ID_FORUM")
+    private Forum forum;
 
-	/** Getter of the name of the section
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /** The user who created the section */
+    @ManyToOne
+    @JoinColumn(name = "ID_USER")
+    private UserAccount user;
 
-	/** Setter of the description of the section
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * Default constructor for the Section class.
+     */
+    public Section() {
+    }
 
-	/** Getter of the date of the section
-	 * @return the date
-	 */
-	public LocalDateTime getDate() {
-		return date;
-	}
+    /**
+     * Gets the ID of the section.
+     *
+     * @return the ID of the section
+     */
+    public int getId() {
+        return id;
+    }
 
-	/** Setter of the date of the section
-	 * @param date the date to set
-	 */
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
+    /**
+     * Sets the ID of the section.
+     *
+     * @param id the new ID of the section
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/** Getter of the forum of the section
-	 * @return the forum
-	 */
-	public Forum getForum() {
-		return forum;
-	}
+    /**
+     * Gets the name of the section.
+     *
+     * @return the name of the section
+     */
+    public String getName() {
+        return name;
+    }
 
-	/** Setter of the forum of the section 
-	 * @param forum the forum to set
-	 */
-	public void setForum(Forum forum) {
-		this.forum = forum;
-	}
-	
-	
+    /**
+     * Sets the name of the section.
+     *
+     * @param name the new name of the section
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets the description of the section.
+     *
+     * @return the description of the section
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the description of the section.
+     *
+     * @param description the new description of the section
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gets the date and time when the section was created.
+     *
+     * @return the creation date and time
+     */
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    /**
+     * Sets the date and time when the section was created.
+     *
+     * @param date the new creation date and time
+     */
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    /**
+     * Gets the forum to which the section belongs.
+     *
+     * @return the forum
+     */
+    public Forum getForum() {
+        return forum;
+    }
+
+    /**
+     * Sets the forum to which the section belongs.
+     *
+     * @param forum the new forum
+     */
+    public void setForum(Forum forum) {
+        this.forum = forum;
+    }
+
+    /**
+     * Gets the user who created the section.
+     *
+     * @return the user
+     */
+    public UserAccount getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the user who created the section.
+     *
+     * @param user the new user
+     */
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
 }

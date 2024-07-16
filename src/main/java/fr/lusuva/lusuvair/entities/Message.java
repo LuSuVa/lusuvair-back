@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -35,6 +37,11 @@ public class Message {
     /** The parent message, if this message is a reply */
     private Message message;
 
+    /** The user who posted the message */
+    @ManyToOne
+    @JoinColumn(name = "ID_USER")
+    private UserAccount user;
+    
     /**
      * Default constructor for the Message class.
      */
@@ -148,4 +155,20 @@ public class Message {
     public void setMessage(Message message) {
         this.message = message;
     }
+
+	/** Gets the user who posted the message.
+	 * @return the user
+	 */
+	public UserAccount getUser() {
+		return user;
+	}
+
+	/** Sets the user who posted the message.
+	 * @param user the user to set
+	 */
+	public void setUser(UserAccount user) {
+		this.user = user;
+	}
+    
+    
 }
