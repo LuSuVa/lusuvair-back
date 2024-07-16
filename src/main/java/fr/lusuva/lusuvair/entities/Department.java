@@ -66,14 +66,14 @@ public class Department {
 		this.name = name;
 	}
 
-	/** Getter of the municipalities of department
+	/** Getter of the municipalities in the department
 	 * @return the list of municipalities
 	 */
 	public List<Municipality> getMunicipalities() {
 		return municipalities;
 	}
 
-	/** Setter of the municipalities of department
+	/** Setter of the municipalities in the department
 	 * @param municipalities the list of municipalities to set
 	 */
 	public void setMunicipalities(List<Municipality> municipalities) {
