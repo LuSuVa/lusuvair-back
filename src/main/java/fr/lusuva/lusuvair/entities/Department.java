@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -23,8 +25,14 @@ public class Department {
 	/** Name of the department */
 	private String name;
 	
+	/** Municipality list of department	 */
 	@OneToMany(mappedBy="department")
 	private List<Municipality> municipalities = new ArrayList<>();
+	
+	/** Region of the department */
+	@ManyToOne
+	@JoinColumn(name = "ID_REGION")
+	private Region region;
 
 	/** Constructor of the class department */
 	public Department() {
@@ -59,19 +67,31 @@ public class Department {
 	}
 
 	/** Getter of the municipalities of department
-	 * @return the municipalities
+	 * @return the list of municipalities
 	 */
 	public List<Municipality> getMunicipalities() {
 		return municipalities;
 	}
 
 	/** Setter of the municipalities of department
-	 * @param municipalities the municipalities to set
+	 * @param municipalities the list of municipalities to set
 	 */
 	public void setMunicipalities(List<Municipality> municipalities) {
 		this.municipalities = municipalities;
 	}
-	
-	
+
+	/** Getter of the region of department
+	 * @return the region
+	 */
+	public Region getRegion() {
+		return region;
+	}
+
+	/** Setter of the region of department
+	 * @param region the region to set
+	 */
+	public void setRegion(Region region) {
+		this.region = region;
+	}
 	
 }

@@ -27,13 +27,14 @@ public class Municipality {
 	/** Population of the municipality */
 	private int population;
 	
-	
+	/** Region of the municipality */
 	@ManyToOne
-	@JoinColumn(name = "id_region")
+	@JoinColumn(name = "ID_REGION")
 	private Region region;
 	
+	/** Department of the municipality */
 	@ManyToOne
-	@JoinColumn(name = "id_department")
+	@JoinColumn(name = "ID_DEPARTMENT")
 	private Department department;
 
 	/** Constructor of the class Municipality */
@@ -108,6 +109,20 @@ public class Municipality {
 	 */
 	public void setRegion(Region region) {
 		this.region = region;
+	}
+
+	/** Getter of the department of the municipality
+	 * @return the department
+	 */
+	public Department getDepartment() {
+		return department;
+	}
+
+	/** Setter of the department of the municipality
+	 * @param department the department to set
+	 */
+	public void setDepartment(Department department) {
+		this.department = department;
 	}	
 	
 	

@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-/** Entity representing a REGION */
+/** Entity representing a region */
 @Entity
 @Table(name = "REGION")
 public class Region {
@@ -23,8 +23,13 @@ public class Region {
 	/** Name of the region */
 	private String name;
 	
+	/** Region list of department */
 	@OneToMany(mappedBy="region")
-	private List<Region> regions = new ArrayList<>();
+	private List<Municipality> municipalities = new ArrayList<>();
+	
+	/** Region list of department */
+	@OneToMany(mappedBy="region")
+	private List<Department> departments = new ArrayList<>();
 
 	/** Constructor of the class region */
 	public Region() {
@@ -58,20 +63,35 @@ public class Region {
 		this.name = name;
 	}
 
-	/** Getter of the municipalities of region
-	 * @return the regions
+	/** Getter of the municipalities of the Region
+	 * @return the list of municipalities
 	 */
-	public List<Region> getRegions() {
-		return regions;
+	public List<Municipality> getMunicipalities() {
+		return municipalities;
 	}
 
-	/** Setter of the municipalities of region
-	 * @param regions the regions to set
+	/** Setter of the municipalities of the Region
+	 * @param municipalities the list of municipalities to set
 	 */
-	public void setRegions(List<Region> regions) {
-		this.regions = regions;
+	public void setMunicipalities(List<Municipality> municipalities) {
+		this.municipalities = municipalities;
+	}
+
+	/** Getter of the departments of the Region
+	 * @return the departments
+	 */
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	/** Setter of the departments of the Region
+	 * @param departments the departments to set
+	 */
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
 	}
 	
 	
+
 	
 }
