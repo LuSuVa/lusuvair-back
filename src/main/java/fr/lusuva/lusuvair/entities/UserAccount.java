@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair;
+package fr.lusuva.lusuvair.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import fr.lusuva.lusuvair.entities.Notification;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

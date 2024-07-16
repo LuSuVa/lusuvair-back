@@ -2,7 +2,6 @@ package fr.lusuva.lusuvair.entities;
 
 import java.util.List;
 
-import fr.lusuva.lusuvair.UserAccount;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
