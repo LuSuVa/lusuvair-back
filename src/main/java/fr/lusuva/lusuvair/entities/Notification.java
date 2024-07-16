@@ -10,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name ="NOTIFICATION")
 public class Notification {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)

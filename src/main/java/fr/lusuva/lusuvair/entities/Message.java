@@ -1,6 +1,8 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -32,10 +35,18 @@ public class Message {
     private LocalDateTime date;
 
     /** The section to which the message belongs */
+    @ManyToOne
+    @JoinColumn(name = "ID_SECTION")
     private Section section;
 
     /** The parent message, if this message is a reply */
+    @ManyToOne
+    @JoinColumn(name = "ID_MESSAGE")
     private Message message;
+    
+    /** Messages created by the user */
+    @OneToMany(mappedBy = "message")
+    private List<Message> messages = new ArrayList<>();
 
     /** The user who posted the message */
     @ManyToOne
