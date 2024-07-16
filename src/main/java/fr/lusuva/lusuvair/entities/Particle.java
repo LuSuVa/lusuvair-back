@@ -52,6 +52,9 @@ public class Particle {
     @OneToMany(mappedBy = "particle")
     private List<FavoriteIndicator> favoriteIndicators;
 
+    /**
+     * List of Air Quality
+     */
     @ManyToMany
     @JoinTable(
         name = "AIR_QUALITY_PARTICLES",
