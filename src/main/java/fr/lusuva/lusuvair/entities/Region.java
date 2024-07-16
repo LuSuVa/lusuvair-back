@@ -69,14 +69,14 @@ public class Region {
 		this.name = name;
 	}
 
-	/** Getter of the municipalities of the Region
+	/** Getter of municipalities in the Region
 	 * @return the list of municipalities
 	 */
 	public List<Municipality> getMunicipalities() {
 		return municipalities;
 	}
 
-	/** Setter of the municipalities of the Region
+	/** Setter of municipalities in the region
 	 * @param municipalities the list of municipalities to set
 	 */
 	public void setMunicipalities(List<Municipality> municipalities) {
@@ -90,7 +90,7 @@ public class Region {
 		return departments;
 	}
 
-	/** Setter of the departments of the Region
+	/** Setter of departments in the region
 	 * @param departments the departments to set
 	 */
 	public void setDepartments(List<Department> departments) {
