@@ -31,6 +31,12 @@ public class Region {
 	@OneToMany(mappedBy="region")
 	private List<Department> departments = new ArrayList<>();
 
+	/**
+	 * List of AirQuality
+	 */
+	@OneToMany(mappedBy = "region")
+	private List<AirQuality> airQualities;
+
 	/** Constructor of the class region */
 	public Region() {
 	}
@@ -91,7 +97,19 @@ public class Region {
 		this.departments = departments;
 	}
 	
-	
+	/**
+	 * Getter of the AirQualities
+	 * @return List of AirQuality
+	 */
+	public List<AirQuality> getAirQualities() {
+		return airQualities;
+	}
 
-	
+	/**
+	 * Setter of the AirQualities
+	 * @param airQualities
+	 */
+	public void setAirQualities(List<AirQuality> airQualities) {
+		this.airQualities = airQualities;
+	}
 }

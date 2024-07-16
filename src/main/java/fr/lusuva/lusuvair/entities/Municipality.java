@@ -1,11 +1,14 @@
 package fr.lusuva.lusuvair.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /** Entity representing a municipality */
@@ -36,6 +39,12 @@ public class Municipality {
 	@ManyToOne
 	@JoinColumn(name = "ID_DEPARTMENT")
 	private Department department;
+
+	/**
+	 * List of AirQuality
+	 */
+	@OneToMany(mappedBy = "municipality")
+	private List<AirQuality> airQualities;
 
 	/** Constructor of the class Municipality */
 	public Municipality() {
@@ -125,5 +134,19 @@ public class Municipality {
 		this.department = department;
 	}	
 	
-	
+	/**
+	 * Getter of the AirQualities
+	 * @return List of AirQuality
+	 */
+	public List<AirQuality> getAirQualities() {
+		return airQualities;
+	}
+
+	/**
+	 * Setter of the AirQualities
+	 * @param airQualities
+	 */
+	public void setAirQualities(List<AirQuality> airQualities) {
+		this.airQualities = airQualities;
+	}
 }

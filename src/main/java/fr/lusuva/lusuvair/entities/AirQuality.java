@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -45,6 +46,20 @@ public class AirQuality {
     private List<Particle> particles;
 
     /**
+     * Region: region
+     */
+    @ManyToOne
+    @JoinColumn(name = "ID_REGION")
+    private Region region;
+
+    /**
+     * Municipality : municipality
+     */
+    @ManyToOne
+    @JoinColumn(name = "ID_MUNICIPALITY")
+    private Municipality municipality;
+
+    /**
      * Get id
      * @return int representing id
      */
@@ -69,6 +84,22 @@ public class AirQuality {
     }
 
     /**
+     * Get region
+     * @return Region
+     */
+    public Region getRegion() {
+        return region;
+    }
+
+    /**
+     * Get Municipality
+     * @return Municipality
+     */
+    public Municipality getMunicipality() {
+        return municipality;
+    }
+
+    /**
      * Set id
      * @param id
      */
@@ -90,5 +121,21 @@ public class AirQuality {
      */
     public void setParticles(List<Particle> particles) {
         this.particles = particles;
+    }
+
+    /**
+     * Set region
+     * @param region
+     */
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    /**
+     * Set municipality
+     * @param municipality
+     */
+    public void setMunicipality(Municipality municipality) {
+        this.municipality = municipality;
     }
 }
