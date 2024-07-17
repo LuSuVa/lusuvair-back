@@ -1,6 +1,7 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -32,10 +34,18 @@ public class Message {
     private LocalDateTime date;
 
     /** The section to which the message belongs */
+    @ManyToOne
+    @JoinColumn(name = "ID_SECTION")
     private Section section;
 
     /** The parent message, if this message is a reply */
-    private Message message;
+    @ManyToOne
+    @JoinColumn(name = "ID_PARENT_MESSAGE")
+    private Message parentMessage;
+
+    /** The children messages */
+    @OneToMany(mappedBy = "parentMessage")
+    private List<Message> childrenMessages;
 
     /** The user who posted the message */
     @ManyToOne
@@ -143,8 +153,8 @@ public class Message {
      *
      * @return the parent message
      */
-    public Message getMessage() {
-        return message;
+    public Message getParentMessage() {
+        return parentMessage;
     }
 
     /**
@@ -152,8 +162,8 @@ public class Message {
      *
      * @param message the new parent message
      */
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setParentMessage(Message message) {
+        this.parentMessage = message;
     }
 
 	/** Gets the user who posted the message.
@@ -170,5 +180,20 @@ public class Message {
 		this.user = user;
 	}
     
+    /**
+     * Get children messages
+     * @return List of Message 
+     */
+    public List<Message> getChildrenMessages() {
+        return childrenMessages;
+    }
+
+    /**
+     * Set children messages
+     * @param childrenMessages
+     */
+    public void setChildrenMessages(List<Message> childrenMessages) {
+        this.childrenMessages = childrenMessages;
+    }
     
 }

@@ -1,6 +1,7 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -40,6 +42,12 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "ID_USER")
     private UserAccount user;
+
+    /**
+     * Messages
+     */
+    @OneToMany(mappedBy = "section")
+    private List<Message> messages;
 
     /**
      * Default constructor for the Section class.
@@ -154,4 +162,21 @@ public class Section {
     public void setUser(UserAccount user) {
         this.user = user;
     }
+
+    /**
+     * Get messages
+     * @return List of Message
+     */
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    /**
+     * Set messages 
+     * @param messages
+     */
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
 }
