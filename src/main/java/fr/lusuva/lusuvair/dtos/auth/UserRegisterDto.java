@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.dtos;
+package fr.lusuva.lusuvair.dtos.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
