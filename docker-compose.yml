@@ -10,3 +10,5 @@ services:
       MYSQL_PASSWORD: cats4life
     ports:
       - "3306:3306"
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/custom.cnf
