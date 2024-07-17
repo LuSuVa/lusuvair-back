@@ -34,4 +34,5 @@ build/
 
 ### Properties Spring ###
 application.local.properties
+application.secret.properties
 bin/
