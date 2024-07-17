@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.dtos;
+package fr.lusuva.lusuvair.dtos.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ public class UserRegisterDto {
      */
     @NotNull
     private String firstName;
-    
+
     /**
      * Last name
      */
@@ -45,7 +45,8 @@ public class UserRegisterDto {
 
     /**
      * Constructor with email and password
-     * @param email String
+     * 
+     * @param email    String
      * @param password String
      */
     public UserRegisterDto(String firstName, String lastName, String email, String password) {
@@ -58,6 +59,7 @@ public class UserRegisterDto {
 
     /**
      * Get first name
+     * 
      * @return String representing first name
      */
     public String getFirstName() {
@@ -66,6 +68,7 @@ public class UserRegisterDto {
 
     /**
      * Get last name
+     * 
      * @return String representing last name
      */
     public String getLastName() {
@@ -74,6 +77,7 @@ public class UserRegisterDto {
 
     /**
      * Get email
+     * 
      * @return String representing email
      */
     public String getEmail() {
@@ -82,6 +86,7 @@ public class UserRegisterDto {
 
     /**
      * Get Password
+     * 
      * @return String representing password
      */
     public String getPassword() {
@@ -90,6 +95,7 @@ public class UserRegisterDto {
 
     /**
      * Set first name
+     * 
      * @param firstName String
      */
     public void setFirstName(String firstName) {
@@ -98,6 +104,7 @@ public class UserRegisterDto {
 
     /**
      * Set last name
+     * 
      * @param lastName
      */
     public void setLastName(String lastName) {
@@ -106,6 +113,7 @@ public class UserRegisterDto {
 
     /**
      * Set email
+     * 
      * @param email String
      */
     public void setEmail(String email) {
@@ -114,6 +122,7 @@ public class UserRegisterDto {
 
     /**
      * Set password
+     * 
      * @param password String
      */
     public void setPassword(String password) {
