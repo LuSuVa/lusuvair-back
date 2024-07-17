@@ -1,7 +1,7 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
 public class ParticleDto {
-	private String name;
+	
 	private double v;
 
 	/**
@@ -15,17 +15,9 @@ public class ParticleDto {
 	 * @param name
 	 * @param v
 	 */
-	public ParticleDto(String name, double v) {
+	public ParticleDto(double v) {
 		super();
-		this.name = name;
 		this.v = v;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -36,16 +28,10 @@ public class ParticleDto {
 	}
 
 	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
 	 * @param v the v to set
 	 */
 	public void setV(double v) {
 		this.v = v;
 	}
+	
 }

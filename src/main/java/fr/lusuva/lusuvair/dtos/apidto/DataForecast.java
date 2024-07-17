@@ -1,10 +1,9 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
-import java.time.LocalDate;
 
 public class DataForecast {
 	private int avg;
-	private LocalDate day;
+	private String day;
 	private int max;
 	private int min;
 
@@ -21,7 +20,7 @@ public class DataForecast {
 	 * @param max
 	 * @param min
 	 */
-	public DataForecast(int avg, LocalDate day, int max, int min) {
+	public DataForecast(int avg, String day, int max, int min) {
 		super();
 		this.avg = avg;
 		this.day = day;
@@ -39,7 +38,7 @@ public class DataForecast {
 	/**
 	 * @return the day
 	 */
-	public LocalDate getDay() {
+	public String getDay() {
 		return day;
 	}
 
@@ -67,7 +66,7 @@ public class DataForecast {
 	/**
 	 * @param day the day to set
 	 */
-	public void setDay(LocalDate day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
 

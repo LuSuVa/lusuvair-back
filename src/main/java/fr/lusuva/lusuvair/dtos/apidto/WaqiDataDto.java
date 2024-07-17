@@ -2,14 +2,14 @@ package fr.lusuva.lusuvair.dtos.apidto;
 
 import java.util.List;
 
-public class waqiDataDto {
+public class WaqiDataDto {
 	private String status;
 	private DataDto dataDto;
 
 	/**
 	 * 
 	 */
-	public waqiDataDto() {
+	public WaqiDataDto() {
 		super();
 	}
 
@@ -17,7 +17,7 @@ public class waqiDataDto {
 	 * @param status
 	 * @param dataDto
 	 */
-	public waqiDataDto(String status, DataDto dataDto) {
+	public WaqiDataDto(String status, DataDto dataDto) {
 		super();
 		this.status = status;
 		this.dataDto = dataDto;

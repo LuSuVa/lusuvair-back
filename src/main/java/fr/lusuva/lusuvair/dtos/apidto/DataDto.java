@@ -6,7 +6,7 @@ public class DataDto {
 	private AttributionDto[] attributionDto;
 	private CityDto cityDto;
 	private String dominentPol;
-	private IaquiDto iaqui;
+	private IaqiDto iaqi;
 	private TimeDto time;
 	private ForecastDto forecast;
 	private DebugDto debugDto;
@@ -29,14 +29,14 @@ public class DataDto {
 	 * @param debugDto
 	 */
 	public DataDto(int aqi, int idx, AttributionDto[] attributionDto, CityDto cityDto, String dominentPol,
-			IaquiDto iaqui, TimeDto time, ForecastDto forecast, DebugDto debugDto) {
+			IaqiDto iaqi, TimeDto time, ForecastDto forecast, DebugDto debugDto) {
 		super();
 		this.aqi = aqi;
 		this.idx = idx;
 		this.attributionDto = attributionDto;
 		this.cityDto = cityDto;
 		this.dominentPol = dominentPol;
-		this.iaqui = iaqui;
+		this.iaqi = iaqi;
 		this.time = time;
 		this.forecast = forecast;
 		this.debugDto = debugDto;
@@ -74,8 +74,8 @@ public class DataDto {
 	/**
 	 * @return the iaqui
 	 */
-	public IaquiDto getIaqui() {
-		return iaqui;
+	public IaqiDto getIaqi() {
+		return iaqi;
 	}
 	/**
 	 * @return the time
@@ -126,10 +126,10 @@ public class DataDto {
 		this.dominentPol = dominentPol;
 	}
 	/**
-	 * @param iaqui the iaqui to set
+	 * @param iaqi the iaqui to set
 	 */
-	public void setIaqui(IaquiDto iaqui) {
-		this.iaqui = iaqui;
+	public void setIaqi(IaqiDto iaqi) {
+		this.iaqi = iaqi;
 	}
 	/**
 	 * @param time the time to set

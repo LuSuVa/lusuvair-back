@@ -1,8 +1,7 @@
 package fr.lusuva.lusuvair.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +31,7 @@ public class AirQuality {
      * LocalDate: date
      */
     @Column(name = "DATE")
-    private LocalDate date;
+    private LocalDateTime date;
 
     /**
      * List of Particle
@@ -71,7 +70,7 @@ public class AirQuality {
      * Get Date
      * @return LocalDate representing date
      */
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -111,7 +110,7 @@ public class AirQuality {
      * Set date
      * @param date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
