@@ -3,18 +3,36 @@ package fr.lusuva.lusuvair.dtos.auth;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * Dto usually send from front to log an user
+ */
 public class UserLoginDto {
+    /**
+     * Email
+     */
     @NotNull
     @Email
     private String email;
 
+    /**
+     * Password
+     */
     @NotNull
     private String password;
 
+    /**
+     * Empty constructor
+     */
     public UserLoginDto() {
         super();
     }
 
+    /**
+     * Contrcutor with email and password
+     * 
+     * @param email    String
+     * @param password String
+     */
     public UserLoginDto(String email, String password) {
         super();
         this.email = email;
@@ -23,6 +41,7 @@ public class UserLoginDto {
 
     /**
      * Get email
+     * 
      * @return String representing email
      */
     public String getEmail() {
@@ -31,6 +50,7 @@ public class UserLoginDto {
 
     /**
      * Get password
+     * 
      * @return String representing password
      */
     public String getPassword() {
@@ -39,6 +59,7 @@ public class UserLoginDto {
 
     /**
      * Set email
+     * 
      * @param email
      */
     public void setEmail(String email) {
@@ -47,6 +68,7 @@ public class UserLoginDto {
 
     /**
      * Set password
+     * 
      * @param password
      */
     public void setPassword(String password) {
