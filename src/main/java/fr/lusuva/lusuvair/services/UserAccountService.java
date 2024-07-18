@@ -47,8 +47,8 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		create(new UserAccount("Lusuva", "Lusuva", "admin5", passwordEncoder.encode("admin"), "ROLE_ADMIN"));
-		create(new UserAccount("user", "user", "user", passwordEncoder.encode("user"), "ROLE_USER"));
+		create(new UserAccount("Lusuva", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN"));
+		create(new UserAccount("user", "user@test.com", "user", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
 
 	/**
