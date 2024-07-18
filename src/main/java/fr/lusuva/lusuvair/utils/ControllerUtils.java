@@ -12,12 +12,23 @@ import org.springframework.validation.ObjectError;
 import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 
+/**
+ * Class uniting utils methods for Controllers
+ */
 @Component
 public class ControllerUtils {
     
+    /**
+     * Autowired UserAccountRepository
+     */
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    /**
+     * Get UserAccount from UserDetails
+     * @param userDetails UserDetails
+     * @return UserAccount
+     */
     public UserAccount getUserAccount(UserDetails userDetails){
         UserAccount userAccount = userAccountRepository.findByEmail(userDetails.getUsername());
 

@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * Class managing all expected Exception in Controllers
+ */
 @ControllerAdvice
 public class ControllerExceptionHandler {
 

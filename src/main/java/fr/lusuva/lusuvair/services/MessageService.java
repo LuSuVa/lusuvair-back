@@ -13,22 +13,39 @@ import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.MessageRepository;
 import fr.lusuva.lusuvair.repositories.SectionRepository;
 
+/**
+ * Message Service
+ */
 @Service
 public class MessageService {
-    
+
+    /**
+     * Message Repository
+     */
     @Autowired
     private MessageRepository messageRepository;
 
+    /**
+     * Section Repository
+     */
     @Autowired
     private SectionRepository sectionRepository;
 
-    public Message create(MessagePostDto messagePostDto, UserAccount userAccount) {
+    /**
+     * Create a Message and return it
+     * 
+     * @param messagePostDto Dto
+     * @param userAccount    Authenticated User
+     * @return Message newly savec
+     * @throws IllegalArgumentException if Section doesn't exist
+     */
+    public Message create(MessagePostDto messagePostDto, UserAccount userAccount) throws IllegalArgumentException {
         Section section = sectionRepository.findById(messagePostDto.getSectionId()).orElse(null);
 
-        if(section == null){
+        if (section == null) {
             throw new NoSuchElementException("Section doesn't exist");
         }
-        
+
         Message message = new Message();
 
         message.setContent(messagePostDto.getContent());

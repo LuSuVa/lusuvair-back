@@ -12,20 +12,28 @@ import fr.lusuva.lusuvair.entities.CustomUserDetails;
 import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 
+/**
+ * UserDetailsService Implementation
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    /**
+     * Autowired UserAccountRepository
+     */
     @Autowired
     private UserAccountRepository userAccountRepository;
-    
+
+    /**
+     * Logger
+     */
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         logger.debug("Entering in loadUserByUsername Method...");
         UserAccount user = userAccountRepository.findByEmail(username);
-        if(user == null){
+        if (user == null) {
             logger.error("Username not found: " + username);
             throw new UsernameNotFoundException("could not found user..!!");
         }

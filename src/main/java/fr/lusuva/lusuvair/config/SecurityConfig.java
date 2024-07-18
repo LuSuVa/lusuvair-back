@@ -25,11 +25,21 @@ import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+	/**
+	 * Bean defining JwtAuthFilter
+	 * 
+	 * @return JwtAuthFilter
+	 */
 	@Bean
 	JwtAuthFilter jwtAuthFilter() {
 		return new JwtAuthFilter();
 	}
 
+	/**
+	 * Bean defining UserDetailsService Implementation
+	 * 
+	 * @return UserDetailsService
+	 */
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
@@ -63,10 +73,10 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		
+
 		authenticationProvider.setUserDetailsService(userDetailsService());
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
-		
+
 		return authenticationProvider;
 	}
 

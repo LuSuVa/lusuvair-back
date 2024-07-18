@@ -14,8 +14,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Represents a message entity with an ID, likes, dislikes, date, section, and parent message.
+ */
 @Entity
 public class Message {
+
+    /** Id of the message */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

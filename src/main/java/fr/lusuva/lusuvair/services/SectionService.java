@@ -10,12 +10,25 @@ import fr.lusuva.lusuvair.entities.Section;
 import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.SectionRepository;
 
+/**
+ * Section Service
+ */
 @Service
 public class SectionService {
-    
+
+    /**
+     * Autowired Section Repository
+     */
     @Autowired
     private SectionRepository sectionRepository;
 
+    /**
+     * Create a section and returns it
+     * 
+     * @param sectionPostDto Dto
+     * @param userAccount    Authenticated user
+     * @return Section newly saved
+     */
     public Section create(SectionPostDto sectionPostDto, UserAccount userAccount) {
         Section section = new Section();
 

@@ -24,17 +24,34 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
+/**
+ * Message Controller
+ * Can be requested at /messages
+ */
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
 
+    /**
+     * Autowired ControllerUtils
+     */
     @Autowired
     private ControllerUtils controllerUtils;
 
+    /**
+     * Autowired MessageService
+     */
     @Autowired
     private MessageService messageService;
 
-
+    /**
+     * Post a message using the Authentication
+     * 
+     * @param messagePostDto Dto expected
+     * @param userDetails    Authenticated user
+     * @param bindingResult  Error from validation
+     * @return 200 with JSON Message body, 404 if validation failed
+     */
     @Operation(summary = "Create a message")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully created", content = {

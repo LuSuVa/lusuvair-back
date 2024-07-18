@@ -25,15 +25,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
+/**
+ * Section Controller
+ */
 @RestController
 @RequestMapping("/sections")
 public class SectionController {
+
+    /**
+     * Autowired ControllerUtils
+     */
     @Autowired
     private ControllerUtils controllerUtils;
 
+    /**
+     * Autowired SectionService
+     */
     @Autowired
     private SectionService sectionService;
 
+    /**
+     * Post a section
+     * 
+     * @param sectionPostDto Dto expected
+     * @param userDetails    Authenticated user
+     * @param bindingResult  Validation errors
+     * @return 200 with section created in body, 404 if validation failed
+     */
     @Operation(summary = "Create a section")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Section successfully created", content = {
