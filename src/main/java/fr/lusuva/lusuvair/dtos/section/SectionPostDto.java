@@ -22,6 +22,12 @@ public class SectionPostDto {
     private String content;
 
     /**
+     * Forum's id
+     */
+    @NotNull
+    private int forumId;
+
+    /**
      * Empty constructor
      */
     public SectionPostDto() {
@@ -33,11 +39,13 @@ public class SectionPostDto {
      * 
      * @param title   String
      * @param content String
+     * @param forumId int
      */
-    public SectionPostDto(String title, String content) {
+    public SectionPostDto(String title, String content, int forumId) {
         super();
         this.title = title;
         this.content = content;
+        this.forumId = forumId;
     }
 
     /**
@@ -59,6 +67,14 @@ public class SectionPostDto {
     }
 
     /**
+     * Get forum's id
+     * @return int
+     */
+    public int getForumId() {
+        return forumId;
+    }
+
+    /**
      * Set title
      * 
      * @param title
@@ -74,5 +90,13 @@ public class SectionPostDto {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * Set forum's id
+     * @param forumId
+     */
+    public void setForumId(int forumId) {
+        this.forumId = forumId;
     }
 }
