@@ -5,15 +5,21 @@ import static fr.lusuva.lusuvair.utils.ControllerUtils.checkErrors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.lusuva.lusuvair.dtos.message.MessagePostDto;
+import fr.lusuva.lusuvair.dtos.message.MessagePutDto;
 import fr.lusuva.lusuvair.entities.Message;
 import fr.lusuva.lusuvair.services.MessageService;
 import fr.lusuva.lusuvair.utils.ControllerUtils;
@@ -45,14 +51,14 @@ public class MessageController {
     private MessageService messageService;
 
     /**
-     * Post a message using the Authentication
+     * Post a Message using the Authentication
      * 
      * @param messagePostDto Dto expected
      * @param userDetails    Authenticated user
      * @param bindingResult  Error from validation
      * @return 200 with JSON Message body, 404 if validation failed
      */
-    @Operation(summary = "Create a message")
+    @Operation(summary = "Create a Message")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
@@ -65,5 +71,81 @@ public class MessageController {
         Message message = messageService.create(messagePostDto, controllerUtils.getUserAccount(userDetails));
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(message);
+    }
+
+    /**
+     * Get all sections
+     * 
+     * @return 200 with JSON List of Message body
+     */
+    @Operation(summary = "Get all sections")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully get all", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message[].class)) }) })
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(messageService.getAll());
+    }
+
+    /**
+     * Get a Message by id
+     * 
+     * @param id Path variable expected to be an id
+     * @return 200 with JSON Message body, 404 if not found
+     */
+    @Operation(summary = "Get a Message by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully get the section correspondig to the id", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+            @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(messageService.getById(id));
+    }
+
+    /**
+     * Update a Message by id
+     * 
+     * @param id            Path variable expected to be an id
+     * @param messagePutDto Dto expected
+     * @param bindingResult Error from validation
+     * @return 200 with JSON Message body, 400 if validation failed
+     */
+    @Operation(summary = "Update a Message")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message successfully created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+            @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateById(@PathVariable int id, @Valid @RequestBody MessagePutDto messagePutDto,
+            BindingResult bindingResult) {
+        checkErrors(bindingResult);
+
+        Message message = messageService.updateById(id, messagePutDto);
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(message);
+    }
+
+    /**
+     * Delete a Message by id
+     * The user must be an administrator
+     * 
+     * @param id Path variable expected to be an id
+     * @return 200, 404 if not found
+     */
+    @SuppressWarnings("rawtypes")
+    @Operation(summary = "Delete a Message")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message successfully deleted", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+            @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity deleteById(@PathVariable int id) {
+        messageService.deleteById(id);
+
+        return ResponseEntity.ok().build();
     }
 }

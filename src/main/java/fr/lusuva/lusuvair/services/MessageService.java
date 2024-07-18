@@ -1,12 +1,14 @@
 package fr.lusuva.lusuvair.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.dtos.message.MessagePostDto;
+import fr.lusuva.lusuvair.dtos.message.MessagePutDto;
 import fr.lusuva.lusuvair.entities.Message;
 import fr.lusuva.lusuvair.entities.Section;
 import fr.lusuva.lusuvair.entities.UserAccount;
@@ -55,5 +57,52 @@ public class MessageService {
         message.setDislike(0);
 
         return messageRepository.save(message);
+    }
+
+    /**
+     * Get message by id
+     * 
+     * @param id int
+     * @return Message
+     * @throws NoSuchElementException if Message is not find
+     */
+    public Message getById(int id) throws NoSuchElementException {
+        Message message = messageRepository.findById(id).orElse(null);
+
+        if (message == null) {
+            throw new NoSuchElementException("Could not find message");
+        }
+
+        return message;
+    }
+
+    /**
+     * Get all
+     * 
+     * @return List of Message
+     */
+    public List<Message> getAll() {
+        return messageRepository.findAll();
+    }
+
+    /**
+     * Update by id
+     * 
+     * @param id            int
+     * @param messagePutDto Dto
+     * @return Message updated
+     */
+    public Message updateById(int id, MessagePutDto messagePutDto) {
+        Message message = getById(id);
+
+        message.setContent(messagePutDto.getContent());
+
+        messageRepository.save(message);
+
+        return message;
+    }
+
+    public void deleteById(int id) {
+        messageRepository.delete(getById(id));
     }
 }

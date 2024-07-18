@@ -93,7 +93,18 @@ public class SecurityConfig {
 		httpSecu.csrf(csrf -> csrf.disable());
 
 		httpSecu.authorizeHttpRequests(request -> request
-				.requestMatchers("/", "/login", "/user/login", "/user/register").permitAll()
+				.requestMatchers(
+						"/",
+						"/login",
+						"/user/login",
+						"/user/register",
+						"/forums",
+						"/forums/**",
+						"/sections",
+						"/sections/**",
+						"/messages",
+						"/messages/**")
+				.permitAll()
 				.anyRequest().authenticated()
 		// .requestMatchers("/logout").authenticated()
 		// .requestMatchers("/townList").authenticated()

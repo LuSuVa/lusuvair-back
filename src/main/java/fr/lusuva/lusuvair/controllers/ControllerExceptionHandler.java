@@ -2,6 +2,7 @@ package fr.lusuva.lusuvair.controllers;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,6 +32,6 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(NoSuchElementException.class)
     private ResponseEntity<String> noSuchElementExceptionHandler(NoSuchElementException noSuchElementException) {
-        return ResponseEntity.badRequest().body(noSuchElementException.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(noSuchElementException.getMessage());
     }
 }

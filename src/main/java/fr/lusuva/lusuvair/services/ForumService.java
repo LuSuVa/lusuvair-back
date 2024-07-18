@@ -1,5 +1,6 @@
 package fr.lusuva.lusuvair.services;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class ForumService {
      * @return Forum
      * @throws NoSuchElementException if no forum find
      */
-    public Forum getForumById(int id) throws NoSuchElementException {
+    public Forum getById(int id) throws NoSuchElementException {
         Forum forum = forumRepository.findById(id).orElse(null);
 
         if (forum == null) {
@@ -51,5 +52,40 @@ public class ForumService {
         }
 
         return forum;
+    }
+
+    /**
+     * Get all
+     * 
+     * @return List of Forum
+     */
+    public List<Forum> getAll() {
+        return forumRepository.findAll();
+    }
+
+    /**
+     * Update a forum by id
+     * 
+     * @param id           int
+     * @param forumPostDto dto
+     * @return Forum updated
+     */
+    public Forum updateById(int id, ForumPostDto forumPostDto) {
+        Forum forum = getById(id);
+
+        forum.setName(forumPostDto.getName());
+
+        forumRepository.save(forum);
+
+        return forum;
+    }
+
+    /**
+     * Delete by id
+     * 
+     * @param id int
+     */
+    public void deleteById(int id) {
+        forumRepository.delete(getById(id));
     }
 }

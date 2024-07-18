@@ -7,7 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,16 +40,45 @@ public class ForumController {
     private ForumService forumService;
 
     /**
+     * Get all forums
+     * 
+     * @return 200 with JSON List of Message body
+     */
+    @Operation(summary = "Get all forums")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully get all", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Forum[].class)) }) })
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(forumService.getAll());
+    }
+
+    /**
+     * Get a forum by id
+     * 
+     * @param id Path variable expected to be an id
+     * @return 200 with JSON Message body, 404 if not found
+     */
+    @Operation(summary = "Get a forum by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully get the forum correspondig to the id", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Forum.class)) }),
+            @ApiResponse(responseCode = "404", description = "Forum not found", content = @Content) })
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(forumService.getById(id));
+    }
+
+    /**
      * Post a forum if the user is an administrator
      * 
      * @param forumPostDto  Dto expected
-     * @param userDetails   Authenticated user
      * @param bindingResult Error from validation
-     * @return 200 with JSON Message body, 404 if validation failed
+     * @return 200 with JSON Forum body, 400 if validation failed
      */
-    @Operation(summary = "Create a message")
+    @Operation(summary = "Create a forum")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Message successfully created", content = {
+            @ApiResponse(responseCode = "200", description = "Forum successfully created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Forum.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content) })
     @PostMapping
@@ -57,5 +90,51 @@ public class ForumController {
         Forum forum = forumService.create(forumPostDto);
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(forum);
+    }
+
+    /**
+     * Update a forum by id
+     * 
+     * @param id            Path variable expected to be an id
+     * @param forumPostDto  Dto expected
+     * @param bindingResult Error from validation
+     * @return 200 with JSON Forum body, 400 if validation failed, 404 if not found
+     */
+    @Operation(summary = "Update a forum")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Forum successfully updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Forum.class)) }),
+            @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Forum not found", content = @Content) })
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateById(@PathVariable int id, @Valid @RequestBody ForumPostDto forumPostDto,
+            BindingResult bindingResult) {
+        checkErrors(bindingResult);
+
+        Forum forum = forumService.updateById(id, forumPostDto);
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(forum);
+    }
+
+    /**
+     * Delete a forum by id
+     * The user must be an administrator
+     * 
+     * @param id            Path variable expected to be an id
+     * @return 200, 404 if not found
+     */
+    @SuppressWarnings("rawtypes")
+    @Operation(summary = "Delete a forum")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Forum successfully deleted", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Forum.class)) }),
+            @ApiResponse(responseCode = "404", description = "Forum not found", content = @Content) })
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity deleteById(@PathVariable int id) {
+        forumService.deleteById(id);
+
+        return ResponseEntity.ok().build();
     }
 }
