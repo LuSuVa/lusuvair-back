@@ -1,10 +1,14 @@
 package fr.lusuva.lusuvair.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import fr.lusuva.lusuvair.dtos.UserRegisterDto;
+import fr.lusuva.lusuvair.dtos.auth.JwtAuthenticationResponse;
+import fr.lusuva.lusuvair.dtos.auth.UserLoginDto;
+import fr.lusuva.lusuvair.dtos.auth.UserRegisterDto;
 import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 import jakarta.annotation.PostConstruct;
@@ -25,6 +29,18 @@ public class UserAccountService {
 	 */
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	/**
+	 * JwtService
+	 */
+	@Autowired
+	private JwtService jwtService;
+
+	/**
+	 * AuthenticationManager
+	 */
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	/**
 	 * Initialize 2 users in database after construct
@@ -50,7 +66,7 @@ public class UserAccountService {
 	 * @param userRegisterDto Dto
 	 * @throws IllegalArgumentException if an user is already using this email
 	 */
-	public void register(UserRegisterDto userRegisterDto) throws IllegalArgumentException {
+	public JwtAuthenticationResponse register(UserRegisterDto userRegisterDto) throws IllegalArgumentException {
 		if (userAccountRepository.findByEmail(userRegisterDto.getEmail()) != null) {
 			throw new IllegalArgumentException("Email is already used");
 		}
@@ -63,5 +79,29 @@ public class UserAccountService {
 				"ROLE_USER");
 
 		create(userAccount);
+
+		var jwt = jwtService.generateToken(userAccount.asUserDetails());
+		return new JwtAuthenticationResponse(jwt);
+	}
+
+	/**
+	 * Login an user if their information are correct
+	 * 
+	 * @param userLoginDto UserLoginDto
+	 * @return JwtAuthenticationResponse
+	 * @throws IllegalArgumentException if information not correct
+	 */
+	public JwtAuthenticationResponse login(UserLoginDto userLoginDto) throws IllegalArgumentException {
+		authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword()));
+
+		var user = userAccountRepository.findByEmail(userLoginDto.getEmail());
+
+		if (user == null) {
+			throw new IllegalArgumentException("Invalid username/email or password");
+		}
+
+		String jwt = jwtService.generateToken(user.asUserDetails());
+		return new JwtAuthenticationResponse(jwt);
 	}
 }

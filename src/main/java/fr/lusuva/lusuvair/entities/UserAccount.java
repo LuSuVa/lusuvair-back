@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
@@ -86,6 +88,10 @@ public class UserAccount {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
+    }
+
+    public UserDetails asUserDetails(){
+        return new User(email, password, authorities);
     }
 
     /**
