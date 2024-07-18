@@ -3,6 +3,8 @@ package fr.lusuva.lusuvair.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,12 +43,14 @@ public class Section {
     /** The user who created the section */
     @ManyToOne
     @JoinColumn(name = "ID_USER")
+    @JsonIgnoreProperties({"sections", "password", "authorities", "notifications", "messages"})
     private UserAccount user;
 
     /**
      * Messages
      */
     @OneToMany(mappedBy = "section")
+    @JsonIgnoreProperties("section")
     private List<Message> messages;
 
     /**

@@ -80,7 +80,7 @@ public class UserAccountService {
 
 		create(userAccount);
 
-		var jwt = jwtService.generateToken(userAccount.asUserDetails());
+		var jwt = jwtService.generateToken(userAccount.asUserDetails().getUsername());
 		return new JwtAuthenticationResponse(jwt);
 	}
 
@@ -101,7 +101,7 @@ public class UserAccountService {
 			throw new IllegalArgumentException("Invalid username/email or password");
 		}
 
-		String jwt = jwtService.generateToken(user.asUserDetails());
+		String jwt = jwtService.generateToken(user.asUserDetails().getUsername());
 		return new JwtAuthenticationResponse(jwt);
 	}
 }

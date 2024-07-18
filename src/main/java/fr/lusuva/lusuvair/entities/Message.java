@@ -3,6 +3,9 @@ package fr.lusuva.lusuvair.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,32 +13,33 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-/**
- * Represents a message entity with an ID, likes, dislikes, date, section, and parent message.
- */
 @Entity
-@Table(name = "MESSAGE")
 public class Message {
-
-    /** Id of the message */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /** Number of likes for the message */
+    @Column(name = "NUMBER_LIKE")
     private int like;
 
     /** Number of dislikes for the message */
+    @Column(name = "NUMBER_DISLIKE")
     private int dislike;
 
+    /** Content */
+    @Column(name = "CONTENT")
+    private String content;
+
     /** Date and time when the message was created */
+    @Column(name = "DATE_TIME")
     private LocalDateTime date;
 
     /** The section to which the message belongs */
     @ManyToOne
     @JoinColumn(name = "ID_SECTION")
+    @JsonIgnoreProperties("messages")
     private Section section;
 
     /** The parent message, if this message is a reply */
@@ -51,7 +55,7 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "ID_USER")
     private UserAccount user;
-    
+
     /**
      * Default constructor for the Message class.
      */
@@ -166,23 +170,28 @@ public class Message {
         this.parentMessage = message;
     }
 
-	/** Gets the user who posted the message.
-	 * @return the user
-	 */
-	public UserAccount getUser() {
-		return user;
-	}
+    /**
+     * Gets the user who posted the message.
+     * 
+     * @return the user
+     */
+    public UserAccount getUser() {
+        return user;
+    }
 
-	/** Sets the user who posted the message.
-	 * @param user the user to set
-	 */
-	public void setUser(UserAccount user) {
-		this.user = user;
-	}
-    
+    /**
+     * Sets the user who posted the message.
+     * 
+     * @param user the user to set
+     */
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+
     /**
      * Get children messages
-     * @return List of Message 
+     * 
+     * @return List of Message
      */
     public List<Message> getChildrenMessages() {
         return childrenMessages;
@@ -190,10 +199,28 @@ public class Message {
 
     /**
      * Set children messages
+     * 
      * @param childrenMessages
      */
     public void setChildrenMessages(List<Message> childrenMessages) {
         this.childrenMessages = childrenMessages;
     }
-    
+
+    /**
+     * Get content
+     * 
+     * @return String representing the content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * Set content
+     * 
+     * @param content
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

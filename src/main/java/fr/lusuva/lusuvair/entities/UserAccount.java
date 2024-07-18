@@ -1,12 +1,15 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
@@ -62,6 +65,7 @@ public class UserAccount {
 
     /** Sections created by the user */
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Section> sections = new ArrayList<>();
 
     /**
@@ -189,7 +193,7 @@ public class UserAccount {
      *
      * @return the authorities granted to the user
      */
-    public List<GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
