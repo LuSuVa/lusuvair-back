@@ -23,7 +23,7 @@ public class ApiMapper {
 
 		    Particle particleCo = new Particle();
 		    particleCo.setName("co");
-		    particleCo.setQuantity(waqiDataDto.getDataDto().getIaqi().getCo().getV());
+		    particleCo.setQuantity(waqiDataDto.getDataDto().getIaqi().getDew().getV());
 		    listParticule.add(particleCo);
 
 		    Particle particleH = new Particle();
@@ -79,6 +79,4 @@ public class ApiMapper {
 		    return listParticule;
 		}
 	 
-	
-	
 }

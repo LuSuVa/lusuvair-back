@@ -1,7 +1,7 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
 public class IaqiDto {
-	private ParticleDto co;
+	private ParticleDto dew;
 	private ParticleDto h;
 	private ParticleDto no2;
 	private ParticleDto o3;
@@ -20,7 +20,7 @@ public class IaqiDto {
 		super();
 	}
 	/**
-	 * @param co
+	 * @param dew
 	 * @param h
 	 * @param no2
 	 * @param o3
@@ -32,10 +32,10 @@ public class IaqiDto {
 	 * @param w
 	 * @param wg
 	 */
-	public IaqiDto(ParticleDto co, ParticleDto h, ParticleDto no2, ParticleDto o3, ParticleDto p, ParticleDto pm10,
+	public IaqiDto(ParticleDto dew, ParticleDto h, ParticleDto no2, ParticleDto o3, ParticleDto p, ParticleDto pm10,
 			ParticleDto pm25, ParticleDto so2, ParticleDto t, ParticleDto w, ParticleDto wg) {
 		super();
-		this.co = co;
+		this.dew = dew;
 		this.h = h;
 		this.no2 = no2;
 		this.o3 = o3;
@@ -50,8 +50,8 @@ public class IaqiDto {
 	/**
 	 * @return the co
 	 */
-	public ParticleDto getCo() {
-		return co;
+	public ParticleDto getDew() {
+		return dew;
 	}
 	/**
 	 * @return the h
@@ -116,8 +116,8 @@ public class IaqiDto {
 	/**
 	 * @param co the co to set
 	 */
-	public void setCo(ParticleDto co) {
-		this.co = co;
+	public void setCo(ParticleDto dew) {
+		this.dew = dew;
 	}
 	/**
 	 * @param h the h to set
@@ -178,6 +178,10 @@ public class IaqiDto {
 	 */
 	public void setWg(ParticleDto wg) {
 		this.wg = wg;
+	}
+	@Override
+	public String toString() {
+		return "IaqiDto [co=" + dew + ", h=" + h + wg;
 	}
 	
 }
