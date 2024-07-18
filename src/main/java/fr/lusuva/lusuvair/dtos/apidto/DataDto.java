@@ -1,6 +1,9 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
+import java.util.Arrays;
+
 public class DataDto {
+
 	private int aqi;
 	private int idx;
 	private AttributionDto[] attributionDto;
@@ -11,9 +14,6 @@ public class DataDto {
 	private ForecastDto forecast;
 	private DebugDto debugDto;
 	
-	/**
-	 * 
-	 */
 	public DataDto() {
 		super();
 	}

@@ -1,54 +1,44 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WaqiDataDto {
-	private String status;
-	private DataDto dataDto;
+    private String status;
+    
+    @JsonProperty("data")
+    private DataDto dataDto;
 
-	/**
-	 * 
-	 */
-	public WaqiDataDto() {
-		super();
-	}
+    // Constructeur sans arguments
+    public WaqiDataDto() {
+        super();
+    }
 
-	/**
-	 * @param status
-	 * @param dataDto
-	 */
-	public WaqiDataDto(String status, DataDto dataDto) {
-		super();
-		this.status = status;
-		this.dataDto = dataDto;
-	}
+    // Constructeur avec arguments
+    public WaqiDataDto(String status, DataDto dataDto) {
+        super();
+        this.status = status;
+        this.dataDto = dataDto;
+    }
 
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
+    // Getters et Setters
+    public String getStatus() {
+        return status;
+    }
 
-	/**
-	 * @return the dataDto
-	 */
-	public DataDto getDataDto() {
-		return dataDto;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public DataDto getDataDto() {
+        return dataDto;
+    }
 
-	/**
-	 * @param dataDto the dataDto to set
-	 */
-	public void setDataDto(DataDto dataDto) {
-		this.dataDto = dataDto;
-	}
+    public void setDataDto(DataDto dataDto) {
+        this.dataDto = dataDto;
+    }
 
+    @Override
+    public String toString() {
+        return "WaqiDataDto {status=" + status + ", data=" + dataDto + "}";
+    }
 }

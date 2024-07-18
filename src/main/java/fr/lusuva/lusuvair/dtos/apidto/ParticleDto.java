@@ -33,5 +33,10 @@ public class ParticleDto {
 	public void setV(double v) {
 		this.v = v;
 	}
+
+	@Override
+	public String toString() {
+		return "v=" + v ;
+	}
 	
 }
