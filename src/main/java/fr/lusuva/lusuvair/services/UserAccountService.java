@@ -10,6 +10,7 @@ import fr.lusuva.lusuvair.dtos.auth.JwtAuthenticationResponse;
 import fr.lusuva.lusuvair.dtos.auth.UserLoginDto;
 import fr.lusuva.lusuvair.dtos.auth.UserRegisterDto;
 import fr.lusuva.lusuvair.entities.UserAccount;
+import fr.lusuva.lusuvair.mapper.UserMapper;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -47,8 +48,9 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		create(new UserAccount("Lusuva", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN"));
-		create(new UserAccount("user", "user@test.com", "user", passwordEncoder.encode("user"), "ROLE_USER"));
+		create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN", "ROLE_USER"));
+		create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+		create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class UserAccountService {
 
 		create(userAccount);
 
-		var jwt = jwtService.generateToken(userAccount.asUserDetails().getUsername());
+		var jwt = jwtService.generateToken(userAccount.getEmail());
 		return new JwtAuthenticationResponse(jwt);
 	}
 
@@ -101,7 +103,7 @@ public class UserAccountService {
 			throw new IllegalArgumentException("Invalid username/email or password");
 		}
 
-		String jwt = jwtService.generateToken(user.asUserDetails().getUsername());
+		String jwt = jwtService.generateToken(UserMapper.toUserDetails(user).getUsername());
 		return new JwtAuthenticationResponse(jwt);
 	}
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.dtos.section.SectionPostDto;
@@ -13,6 +16,7 @@ import fr.lusuva.lusuvair.entities.Forum;
 import fr.lusuva.lusuvair.entities.Section;
 import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.SectionRepository;
+import fr.lusuva.lusuvair.utils.ControllerUtils;
 
 /**
  * Section Service
@@ -31,6 +35,12 @@ public class SectionService {
      */
     @Autowired
     private ForumService forumService;
+
+    /**
+     * Autowired ControllerUtils
+     */
+    @Autowired
+    private ControllerUtils controllerUtils;
 
     /**
      * Create a section and returns it
@@ -88,8 +98,9 @@ public class SectionService {
      * @param sectionPutDto dto
      * @return Section updated
      */
-    public Section updateById(int id, SectionPutDto sectionPutDto) {
+    public Section updateById(int id, SectionPutDto sectionPutDto, UserDetails userDetails) {
         Section section = getById(id);
+        isOwnerUserOrAdmin(section, userDetails);
 
         section.setName(sectionPutDto.getTitle());
         section.setDescription(sectionPutDto.getContent());
@@ -99,7 +110,31 @@ public class SectionService {
         return section;
     }
 
-    public void deleteById(int id) {
-        sectionRepository.delete(getById(id));
+    /**
+     * Delete by id
+     * 
+     * @param id int
+     */
+    public void deleteById(int id, UserDetails userDetails) {
+        Section section = getById(id);
+        isOwnerUserOrAdmin(section, userDetails);
+
+        sectionRepository.delete(section);
+    }
+
+    /**
+     * Check if the user owns the section or if he's admin
+     * 
+     * @param id          int
+     * @param userDetails UserDetails
+     * @throws AuthenticationServiceException if user isn't onwer or isn't admin
+     */
+    private void isOwnerUserOrAdmin(Section section, UserDetails userDetails) throws AuthenticationServiceException {
+        UserAccount userAccount = controllerUtils.getUserAccount(userDetails);
+
+        if (!section.getUser().equals(userAccount)
+                && !userAccount.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            throw new AuthenticationServiceException("Not Authorized");
+        }
     }
 }
