@@ -1,6 +1,7 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,17 +52,17 @@ public class Message {
     /** The children messages */
     @OneToMany(mappedBy = "parentMessage")
     @JsonIgnoreProperties("parentMessage")
-    private List<Message> childrenMessages;
+    private List<Message> childrenMessages = new ArrayList<>();
 
     /** User that have liked this message */
     @ManyToMany
     @JoinTable(name = "USERS_LIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_MESSAGE"), inverseJoinColumns = @JoinColumn(name = "ID_USER"))
-    private List<UserAccount> usersLiked;
+    private List<UserAccount> usersLiked = new ArrayList<>();
 
     /** User that have disliked this message */
     @ManyToMany
     @JoinTable(name = "USERS_DISLIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_MESSAGE"), inverseJoinColumns = @JoinColumn(name = "ID_USER"))
-    private List<UserAccount> usersDisliked;
+    private List<UserAccount> usersDisliked = new ArrayList<>();
 
     /** The user who posted the message */
     @ManyToOne

@@ -164,7 +164,7 @@ public class MessageController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully liked", content = @Content),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
-    @DeleteMapping("/{id}/like")
+    @PostMapping("/{id}/like")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity likeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
         messageService.like(id, userDetails);
@@ -184,7 +184,7 @@ public class MessageController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully liked", content = @Content),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
-    @DeleteMapping("/{id}/dislike")
+    @PostMapping("/{id}/dislike")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity dislikeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
         messageService.dislike(id, userDetails);
