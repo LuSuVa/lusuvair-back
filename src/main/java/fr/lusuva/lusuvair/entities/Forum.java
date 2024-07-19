@@ -3,6 +3,9 @@ package fr.lusuva.lusuvair.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,13 +20,25 @@ import jakarta.persistence.Table;
 @Table(name = "FORUM")
 public class Forum {
 
+    /**
+     * Id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
 
+    /**
+     * Name
+     */
+    @Column(name = "NAME")
     private String name;
 
+    /**
+     * List of Section
+     */
     @OneToMany(mappedBy = "forum")
+    @JsonIgnoreProperties("forum")
     private List<Section> sections = new ArrayList<>();
 
     /**

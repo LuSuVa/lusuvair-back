@@ -1,7 +1,5 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
-import java.util.Arrays;
-
 public class DataDto {
 
 	private int aqi;
