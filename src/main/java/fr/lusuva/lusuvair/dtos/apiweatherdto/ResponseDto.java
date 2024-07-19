@@ -1,7 +1,7 @@
 /**
  * DTO representing a response that includes city details, update information, and weather forecast.
  */
-package fr.lusuva.lusuvair.dtos.apimeteodto;
+package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 public class ResponseDto {
 	private CityDto cityDto;

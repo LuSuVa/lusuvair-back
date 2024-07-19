@@ -1,7 +1,7 @@
 /**
  * DTO representing an update for weather forecasts.
  */
-package fr.lusuva.lusuvair.dtos.apimeteodto;
+package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 public class UpdateDto {
 
