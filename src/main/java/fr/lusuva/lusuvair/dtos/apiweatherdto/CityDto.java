@@ -1,7 +1,7 @@
 /**
  * DTO representing a city with its geographical and administrative details.
  */
-package fr.lusuva.lusuvair.dtos.apimeteodto;
+package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 public class CityDto {
 

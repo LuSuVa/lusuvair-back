@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.dtos.apimeteodto;
+package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 /*
  * DTO representing for weather forecasts
