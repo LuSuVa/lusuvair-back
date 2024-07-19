@@ -21,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 /**
@@ -67,6 +68,10 @@ public class UserAccount {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Section> sections = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_MUNICIPALITY")
+    private Municipality municipality;
 
     /**
      * Default constructor for the UserAccount class.

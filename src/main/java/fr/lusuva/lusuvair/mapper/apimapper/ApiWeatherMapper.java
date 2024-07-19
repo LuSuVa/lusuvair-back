@@ -9,7 +9,7 @@ import fr.lusuva.lusuvair.enums.WeatherType;
 
 public class ApiWeatherMapper {
 	
-	public Weather toWeather(ResponseDto responseDto,ObservationDto observationDto) {
+	public static Weather toWeather(ResponseDto responseDto,ObservationDto observationDto) {
 		   Weather weather = new Weather();		   
 		   
 		   weather.setAtmophericPressure(Integer.parseInt(observationDto.getBarometerDto().getValue()));

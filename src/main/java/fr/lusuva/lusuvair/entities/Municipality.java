@@ -39,6 +39,12 @@ public class Municipality {
 	@ManyToOne
 	@JoinColumn(name = "ID_DEPARTMENT")
 	private Department department;
+	
+	/**
+	 * List of AirQuality
+	 */
+	@OneToMany(mappedBy = "municipality")
+	private List<UserAccount> userAccounts;
 
 	/**
 	 * List of AirQuality

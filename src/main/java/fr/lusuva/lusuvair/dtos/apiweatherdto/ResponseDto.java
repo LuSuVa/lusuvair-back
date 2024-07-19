@@ -4,6 +4,7 @@
 package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 public class ResponseDto {
+	
 	private CityDto cityDto;
 	private UpdateDto updateDto;
 	private ForecastDto forecastDto;
