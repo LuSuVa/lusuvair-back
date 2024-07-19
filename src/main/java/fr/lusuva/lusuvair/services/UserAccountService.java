@@ -47,8 +47,8 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		create(new UserAccount("Lusuva", "Lusuva", "admin5", passwordEncoder.encode("admin"), "ROLE_ADMIN"));
-		create(new UserAccount("user", "user", "user", passwordEncoder.encode("user"), "ROLE_USER"));
+		create(new UserAccount("Lusuva", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN"));
+		create(new UserAccount("user", "user@test.com", "user", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class UserAccountService {
 
 		create(userAccount);
 
-		var jwt = jwtService.generateToken(userAccount.asUserDetails());
+		var jwt = jwtService.generateToken(userAccount.asUserDetails().getUsername());
 		return new JwtAuthenticationResponse(jwt);
 	}
 
@@ -101,7 +101,7 @@ public class UserAccountService {
 			throw new IllegalArgumentException("Invalid username/email or password");
 		}
 
-		String jwt = jwtService.generateToken(user.asUserDetails());
+		String jwt = jwtService.generateToken(user.asUserDetails().getUsername());
 		return new JwtAuthenticationResponse(jwt);
 	}
 }

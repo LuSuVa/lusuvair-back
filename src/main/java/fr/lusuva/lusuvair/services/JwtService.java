@@ -28,73 +28,88 @@ public class JwtService {
     private String jwtSigningKey;
 
     /**
-     * Extract User Name
+     * Extracts username
+     * 
      * @param token String
      * @return String
      */
-    public String extractUserName(String token) {
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
     /**
-     * Generate token
-     * @param userDetails UserDetails
-     * @return String token
-     */
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    /**
-     * Check if a token is valid
-     * @param token String
-     * @param userDetails UserDetails
-     * @return True if valid, false if not
-     */
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername()));
-    }
-
-    /**
-     * Extract Claim
+     * Extracts claim
+     * 
      * @param <T>
-     * @param token String
-     * @param claimsResolvers
+     * @param token          String
+     * @param claimsResolver Function<Claims, T>
      * @return T
      */
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
-        return claimsResolvers.apply(claims);
+        return claimsResolver.apply(claims);
     }
 
     /**
-     * Generate token
-     * @param extraClaims Map<String, Object>
-     * @param userDetails UserDetails
-     * @return String token
-     */
-    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
-    }
-
-    /**
-     * Extract all claims
+     * Extracts all claims
+     * 
      * @param token String
      * @return Claims
      */
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
                 .getBody();
     }
 
     /**
-     * Get signing key
+     * Validate token
+     * 
+     * @param token       String
+     * @param userDetails UserDetails
+     * @return true if valid, else return false
+     */
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()));
+    }
+
+    /**
+     * Generate token
+     * 
+     * @param username String
+     * @return String token
+     */
+    public String generateToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, username);
+    }
+
+    /**
+     * Create token
+     * 
+     * @param claims   Map<String, Object>
+     * @param username String
+     * @return String new token
+     */
+    private String createToken(Map<String, Object> claims, String username) {
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+    }
+
+    /**
+     * Get sign key
+     * 
      * @return Key
      */
-    private Key getSigningKey() {
+    private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }

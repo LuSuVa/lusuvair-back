@@ -2,13 +2,11 @@ services:
   db:
     image: mysql
     container_name: my_mysql_db
-    restart: always
+    # restart: always
     environment:
       MYSQL_ROOT_PASSWORD: cats4ever
-      MYSQL_DATABASE: air-quality
+      MYSQL_DATABASE: lusuvair
       MYSQL_USER: cats
       MYSQL_PASSWORD: cats4life
     ports:
       - "3306:3306"
-    volumes:
-      - ./my.cnf:/etc/mysql/conf.d/custom.cnf

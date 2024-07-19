@@ -1,12 +1,10 @@
 package fr.lusuva.lusuvair.controllers;
 
-import java.util.stream.Collectors;
+import static fr.lusuva.lusuvair.utils.ControllerUtils.checkErrors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +48,7 @@ public class UserAccountController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDto userRegisterDto,
             BindingResult bindingResult) {
+        checkErrors(bindingResult);
 
         JwtAuthenticationResponse token = userAccountService.register(userRegisterDto);
 
@@ -69,33 +68,10 @@ public class UserAccountController {
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content) })
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDto userLoginDto, BindingResult bindingResult) {
+        checkErrors(bindingResult);
 
         JwtAuthenticationResponse token = userAccountService.login(userLoginDto);
 
         return ResponseEntity.ok(token);
-    }
-
-    /**
-     * Check Errors from Validation Error
-     * 
-     * @param result
-     * @throws IllegalArgumentException
-     */
-    protected void checkErrors(BindingResult result) throws IllegalArgumentException {
-        if (result.hasErrors()) {
-            throw new IllegalArgumentException(result.getAllErrors().stream().map(ObjectError::getDefaultMessage)
-                    .collect(Collectors.joining("\n")));
-        }
-    }
-
-    /**
-     * Exception Handler for IllegalArgument
-     * 
-     * @param illegalArgumentException exception
-     * @return Bad Requestion response entity
-     */
-    @ExceptionHandler(IllegalArgumentException.class)
-    private ResponseEntity<String> illegalArgumentExceptionHandler(IllegalArgumentException illegalArgumentException) {
-        return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
     }
 }
