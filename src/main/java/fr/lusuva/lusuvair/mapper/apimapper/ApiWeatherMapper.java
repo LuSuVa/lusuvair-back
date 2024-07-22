@@ -1,6 +1,7 @@
 package fr.lusuva.lusuvair.mapper.apimapper;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import fr.lusuva.lusuvair.dtos.apiweatherdto.ObservationDto;
 import fr.lusuva.lusuvair.dtos.apiweatherdto.ResponseDto;
@@ -13,14 +14,20 @@ public class ApiWeatherMapper {
 	public static Weather toWeather(ResponseDto responseDto,WeatherTypeDto weatherTypeDto) {
 		   Weather weather = new Weather();		   
 		   
-		   weather.setAtmophericPressure(Integer.parseInt(weatherTypeDto.getObservationDto().getBarometerDto().getValue()));
-		   weather.setHumidity(Integer.parseInt(weatherTypeDto.getObservationDto().getHumidityDto().getValue()));
-		   weather.setTemperature(Integer.parseInt(weatherTypeDto.getObservationDto().getTemperatureDto().getValue()));
-		   weather.setDate(LocalDateTime.parse(responseDto.getForecastDto().getDateTime()));
-		   weather.setType(WeatherType.getWeatherType(responseDto.getForecastDto().getWeather()));
-		   weather.setWind(responseDto.getForecastDto().getWind10m());		   
-		   weather.setDirWind(responseDto.getForecastDto().getDirwind10m());
-		   weather.setProbaRain(responseDto.getForecastDto().getProbarain());
+		   if(weatherTypeDto.getObservation() instanceof ObservationDto) {
+			   
+			   ObservationDto observation = (ObservationDto) weatherTypeDto.getObservation();
+			   weather.setAtmophericPressure(Integer.parseInt(observation.getBarometer().getValue()));
+			   weather.setHumidity(Integer.parseInt(observation.getHumidity().getValue()));
+			   weather.setTemperature(Integer.parseInt(observation.getTemperature().getValue()));
+		   }
+		   
+		   //DateTimeFormatter format = new DateTimeFormatters()
+		   weather.setDate(LocalDateTime.parse(responseDto.getForecast()[0].getDatetime(),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")));
+		   weather.setType(WeatherType.getWeatherType(responseDto.getForecast()[0].getWeather()));
+		   weather.setWind(responseDto.getForecast()[0].getWind10m());		   
+		   weather.setDirWind(responseDto.getForecast()[0].getDirwind10m());
+		   weather.setProbaRain(responseDto.getForecast()[0].getProbarain());
 		   
 		   return weather;  
 	   }

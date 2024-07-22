@@ -1,6 +1,8 @@
 package fr.lusuva.lusuvair;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestTemplate;
@@ -12,30 +14,33 @@ import fr.lusuva.lusuvair.mapper.apimapper.ApiWeatherMapper;
 import fr.lusuva.lusuvair.services.WeatherService;
 
 @SpringBootApplication
-public class FetchApiWeatherApplication {
+public class FetchApiWeatherApplication  implements CommandLineRunner {
 
 	@Autowired
 	private WeatherService weatherService;
 	
+	@Value("${token.signing.key.apiWeather}")
+	private String apiWeatherToken;
+	
 	public static void main(String[] args) {
-		System.out.println("coucou");
 		SpringApplication.run(FetchApiWeatherApplication.class, args);
 	}
 	
+	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("coucou");
-        RestTemplate template = new RestTemplate();
-        
+
+		        RestTemplate template = new RestTemplate();
+
         ResponseDto responseDto = template.getForObject(
-                "https://api.meteo-concept.com/api/forecast/daily?token=076df100be13505fb6674558c0f1a649cdec96f3b4d867a3a09818e081715410&insee=86010", ResponseDto.class);
-        WeatherTypeDto weatherTypeDto = template.getForObject(
-        		"https://api.meteo-concept.com/api/observations/around?token=076df100be13505fb6674558c0f1a649cdec96f3b4d867a3a09818e081715410&insee&insee=86010&radius=50", WeatherTypeDto.class);
+                "https://api.meteo-concept.com/api/forecast/daily?token="+apiWeatherToken+"&insee=86010", ResponseDto.class);
+        WeatherTypeDto[] weatherTypeDto = template.getForObject(
+        		"https://api.meteo-concept.com/api/observations/around?token="+apiWeatherToken+"&insee&insee=86010&radius=50", WeatherTypeDto[].class);
 
         if (responseDto != null && weatherTypeDto != null) {        
-        	Weather weather = ApiWeatherMapper.toWeather(responseDto, weatherTypeDto);
+        	Weather weather = ApiWeatherMapper.toWeather(responseDto, weatherTypeDto[0]);
             weatherService.insertNewWeather(weather);
         } else {
-            System.out.println("Failed to fetch data or status is not ok");
+            System.out.println("Failed to fetch data");
         }        
     }
 
