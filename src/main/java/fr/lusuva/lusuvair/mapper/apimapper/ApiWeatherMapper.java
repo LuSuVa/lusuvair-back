@@ -20,7 +20,7 @@ public class ApiWeatherMapper {
 		   weather.setType(WeatherType.getWeatherType(responseDto.getForecastDto().getWeather()));
 		   weather.setWind(responseDto.getForecastDto().getWind10m());		   
 		   weather.setDirWind(responseDto.getForecastDto().getDirwind10m());
-		   weather.setProbaRain(responseDto.getForecastDto().getProbarain());  
+		   weather.setProbaRain(responseDto.getForecastDto().getProbarain());
 		   
 		   return weather;  
 	   }

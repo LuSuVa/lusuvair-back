@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -74,6 +76,10 @@ public class Weather {
      */
     @OneToMany(mappedBy = "weather")
     private List<FavoriteIndicator> favoriteIndicators;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_MUNICIPALITY")
+    private Municipality municipality;
 
     /**
      * Get id
@@ -184,6 +190,20 @@ public class Weather {
 	 */
 	public int getProbaRain() {
 		return probaRain;
+	}
+
+	/**
+	 * @return the municipality
+	 */
+	public Municipality getMunicipality() {
+		return municipality;
+	}
+
+	/**
+	 * @param municipality the municipality to set
+	 */
+	public void setMunicipality(Municipality municipality) {
+		this.municipality = municipality;
 	}
 
 	/**

@@ -51,6 +51,13 @@ public class Municipality {
 	 */
 	@OneToMany(mappedBy = "municipality")
 	private List<AirQuality> airQualities;
+	
+	/**
+     * List of weather
+     */
+    @OneToMany(mappedBy = "municipality")
+    private List<Weather> weather;
+    
 
 	/** Constructor of the class Municipality */
 	public Municipality() {
@@ -155,4 +162,34 @@ public class Municipality {
 	public void setAirQualities(List<AirQuality> airQualities) {
 		this.airQualities = airQualities;
 	}
+
+	/**
+	 * @return the userAccounts
+	 */
+	public List<UserAccount> getUserAccounts() {
+		return userAccounts;
+	}
+
+	/**
+	 * @param userAccounts the userAccounts to set
+	 */
+	public void setUserAccounts(List<UserAccount> userAccounts) {
+		this.userAccounts = userAccounts;
+	}
+
+	/**
+	 * @return the weather
+	 */
+	public List<Weather> getWeather() {
+		return weather;
+	}
+
+	/**
+	 * @param weather the weather to set
+	 */
+	public void setWeather(List<Weather> weather) {
+		this.weather = weather;
+	}
+	
+	
 }
