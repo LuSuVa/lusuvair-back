@@ -244,7 +244,7 @@ public class Message {
      * @param userAccount UserAccount
      */
     public void addUsersDisliked(UserAccount userAccount){
-        usersLiked.add(userAccount);
+        usersDisliked.add(userAccount);
     }
 
     /**
@@ -253,7 +253,7 @@ public class Message {
      * @param userAccount UserAccount
      */
     public void removeUsersDisliked(UserAccount userAccount){
-        usersLiked.remove(userAccount);
+        usersDisliked.remove(userAccount);
     }
 
     /**
