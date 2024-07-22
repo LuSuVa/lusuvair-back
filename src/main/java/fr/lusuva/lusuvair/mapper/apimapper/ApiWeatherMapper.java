@@ -17,12 +17,11 @@ public class ApiWeatherMapper {
 		   if(weatherTypeDto.getObservation() instanceof ObservationDto) {
 			   
 			   ObservationDto observation = (ObservationDto) weatherTypeDto.getObservation();
-			   weather.setAtmophericPressure(Integer.parseInt(observation.getBarometer().getValue()));
-			   weather.setHumidity(Integer.parseInt(observation.getHumidity().getValue()));
-			   weather.setTemperature(Integer.parseInt(observation.getTemperature().getValue()));
+			   weather.setAtmophericPressure(Double.parseDouble(observation.getBarometer().getValue()));
+			   weather.setHumidity(Double.parseDouble(observation.getHumidity().getValue()));
+			   weather.setTemperature(Double.parseDouble(observation.getTemperature().getValue()));
 		   }
 		   
-		   //DateTimeFormatter format = new DateTimeFormatters()
 		   weather.setDate(LocalDateTime.parse(responseDto.getForecast()[0].getDatetime(),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")));
 		   weather.setType(WeatherType.getWeatherType(responseDto.getForecast()[0].getWeather()));
 		   weather.setWind(responseDto.getForecast()[0].getWind10m());		   

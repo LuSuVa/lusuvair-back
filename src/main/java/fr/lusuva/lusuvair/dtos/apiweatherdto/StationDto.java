@@ -2,17 +2,14 @@ package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 public class StationDto {
 	private String name;
-	
-	private String city;
 
+	private String city;
 
 	/**
 	 * 
 	 */
 	public StationDto() {
 	}
-
-
 
 	/**
 	 * @param name
@@ -22,8 +19,6 @@ public class StationDto {
 		this.name = name;
 		this.city = city;
 	}
-
-
 
 	/**
 	 * @return the name
@@ -52,7 +47,5 @@ public class StationDto {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
-	
-	
+
 }

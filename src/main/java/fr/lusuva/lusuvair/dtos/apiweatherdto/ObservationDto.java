@@ -1,76 +1,55 @@
 package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ObservationDto {
 	private String time;
-	private TemperatureDto temperature;
-	private HumidityDto humidity;
-	private BarometerDto barometer;
-	/**
-	 * @param time
-	 * @param temperature
-	 * @param humidity
-	 * @param barometer
-	 */
-	public ObservationDto(String time, TemperatureDto temperature, HumidityDto humidity, BarometerDto barometer) {
+	private ObservationValueDto temperature;
+	private ObservationValueDto humidity;
+	private ObservationValueDto barometer;
+
+	public ObservationDto() {
+	}
+
+	public ObservationDto(String time, ObservationValueDto temperature, ObservationValueDto humidity,
+			ObservationValueDto barometer) {
 		this.time = time;
 		this.temperature = temperature;
 		this.humidity = humidity;
 		this.barometer = barometer;
 	}
-	/**
-	 * 
-	 */
-	public ObservationDto() {
-	}
-	/**
-	 * @return the time
-	 */
+
 	public String getTime() {
 		return time;
 	}
-	/**
-	 * @param time the time to set
-	 */
+
 	public void setTime(String time) {
 		this.time = time;
 	}
-	/**
-	 * @return the temperature
-	 */
-	public TemperatureDto getTemperature() {
+
+	public ObservationValueDto getTemperature() {
 		return temperature;
 	}
-	/**
-	 * @param temperature the temperature to set
-	 */
-	public void setTemperature(TemperatureDto temperature) {
+
+	public void setTemperature(ObservationValueDto temperature) {
 		this.temperature = temperature;
 	}
-	/**
-	 * @return the humidity
-	 */
-	public HumidityDto getHumidity() {
+
+	public ObservationValueDto getHumidity() {
 		return humidity;
 	}
-	/**
-	 * @param humidity the humidity to set
-	 */
-	public void setHumidity(HumidityDto humidity) {
+
+	public void setHumidity(ObservationValueDto humidity) {
 		this.humidity = humidity;
 	}
-	/**
-	 * @return the barometer
-	 */
-	public BarometerDto getBarometer() {
+
+	public ObservationValueDto getBarometer() {
 		return barometer;
 	}
-	/**
-	 * @param barometer the barometer to set
-	 */
-	public void setBarometer(BarometerDto barometer) {
+
+	public void setBarometer(ObservationValueDto barometer) {
 		this.barometer = barometer;
 	}
-	
 
-	
 }

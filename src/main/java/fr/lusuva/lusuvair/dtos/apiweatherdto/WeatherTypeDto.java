@@ -9,7 +9,7 @@ import fr.lusuva.lusuvair.deserializers.ObservationDeserializer;
  */
 public class WeatherTypeDto {
 
-	StationDto station;
+	private StationDto station;
 
 	/**
 	 * Object observation
@@ -19,17 +19,7 @@ public class WeatherTypeDto {
 	 * 
 	 * So it must be Object to receive both and can be casted later
 	 */
-	@JsonDeserialize(using = ObservationDeserializer.class)
-	Object observation;
-
-	/**
-	 * @param station
-	 * @param observation
-	 */
-	public WeatherTypeDto(StationDto station, Object observation) {
-		this.station = station;
-		this.observation = observation;
-	}
+	private ObservationDto observation;
 
 	/**
 	 * @return the station
@@ -48,15 +38,17 @@ public class WeatherTypeDto {
 	/**
 	 * @return the observation
 	 */
-	public Object getObservation() {
+	public ObservationDto getObservation() {
 		return observation;
 	}
 
 	/**
 	 * @param observation the observation to set
 	 */
+	@JsonDeserialize(using = ObservationDeserializer.class)
 	public void setObservation(Object observation) {
-		this.observation = observation;
+		if (observation instanceof ObservationDto)
+			this.observation = (ObservationDto) observation;
 	}
 
 }

@@ -16,14 +16,14 @@ import fr.lusuva.lusuvair.dtos.apiweatherdto.ObservationDto;
  * This was made mainly because in response JSON, we can receive ObservationDto
  * or an empty array if there is no data
  */
-public class ObservationDeserializer extends JsonDeserializer<Object> {
+public class ObservationDeserializer extends JsonDeserializer<ObservationDto> {
     @Override
-    public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public ObservationDto deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = p.getCodec().readTree(p);
 
         if (node.isArray()) {
-            return mapper.readValue(node.traverse(p.getCodec()), ObservationDto[].class);
+            return null;
         } else {
             return mapper.readValue(node.traverse(p.getCodec()), ObservationDto.class);
         }

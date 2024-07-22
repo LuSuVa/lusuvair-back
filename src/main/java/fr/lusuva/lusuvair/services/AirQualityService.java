@@ -1,11 +1,9 @@
 package fr.lusuva.lusuvair.services;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import fr.lusuva.lusuvair.entities.AirQuality;
-import fr.lusuva.lusuvair.entities.Particle;
 import fr.lusuva.lusuvair.repositories.AirQualityRepository;
 import jakarta.transaction.Transactional;
 

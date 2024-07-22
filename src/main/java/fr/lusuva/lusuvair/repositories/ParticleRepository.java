@@ -1,7 +1,5 @@
 package fr.lusuva.lusuvair.repositories;
 
-import java.util.Map;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.lusuva.lusuvair.entities.Particle;

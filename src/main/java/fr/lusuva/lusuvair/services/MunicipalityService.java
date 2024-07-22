@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.entities.Municipality;
-import fr.lusuva.lusuvair.entities.Particle;
-import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.MunicipalityRepository;
-import fr.lusuva.lusuvair.repositories.ParticleRepository;
 import jakarta.annotation.PostConstruct;
 
 @Service

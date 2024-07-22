@@ -23,6 +23,10 @@ public class CityDto {
 	/* Altitude of the municipality */
 	private double altitude;
 
+	public CityDto() {
+		super();
+	}
+
 	/**
 	 * Constructor for CityDto.
 	 *
