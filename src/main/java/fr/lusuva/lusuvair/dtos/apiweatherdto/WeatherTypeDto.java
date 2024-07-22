@@ -4,13 +4,24 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import fr.lusuva.lusuvair.deserializers.ObservationDeserializer;
 
+/**
+ * Dto corresponding to the response of Weather API
+ */
 public class WeatherTypeDto {
-	
+
 	StationDto station;
-	
+
+	/**
+	 * Object observation
+	 * 
+	 * It has a particular deserializer because response JSON can be ObservationDto
+	 * or an empty array
+	 * 
+	 * So it must be Object to receive both and can be casted later
+	 */
 	@JsonDeserialize(using = ObservationDeserializer.class)
 	Object observation;
-	
+
 	/**
 	 * @param station
 	 * @param observation
@@ -47,5 +58,5 @@ public class WeatherTypeDto {
 	public void setObservation(Object observation) {
 		this.observation = observation;
 	}
-	
+
 }
