@@ -52,21 +52,9 @@ public class FetchApiApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-	loadInitialMunicipalities();
 	fetchDataAndPersist();
 	}
-	private void loadInitialMunicipalities() {
-        List<Municipality> municipalities = new ArrayList<>();
-        municipalities.add(new Municipality(44000, "Nantes", 320732));
-        municipalities.add(new Municipality(49000, "Angers", 155786));
-        municipalities.add(new Municipality(72000, "Le-Mans", 1451500));
-        municipalities.add(new Municipality(44000, "Saint-Nazaire", 71887));
-        municipalities.add(new Municipality(85000, "Roche-Sur-Yon", 55213));
-        municipalities.add(new Municipality(49000, "Cholet", 54357));
-//        municipalities.add(new Municipality(53000, "Laval", 49617));
-        municipalities.add(new Municipality(44000, "rezé", 42993));
-        municipalityService.insertMunicipality(municipalities);
-	}
+	
 	@Scheduled(cron = "0 */30 * * * ?")
 		public void fetchDataAndPersist() {	
 		List<Municipality> municipalities = municipalityService.getMunicipalities();
@@ -106,7 +94,7 @@ public class FetchApiApplication implements CommandLineRunner {
 					Particle particle= new Particle();
 					particle.setName(entry.getKey());
 					particle.setQuantity(entry.getValue());
-					particleService.deleteByNameAndQuantity(entry.getKey(),entry.getValue());
+//					particleService.deleteByNameAndQuantity(entry.getKey(),entry.getValue());
 					particleService.insertParticle(particle);
 					particleEntities.add(particle);
 				}
