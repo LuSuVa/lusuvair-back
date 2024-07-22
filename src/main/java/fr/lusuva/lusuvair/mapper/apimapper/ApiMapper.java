@@ -1,10 +1,7 @@
 package fr.lusuva.lusuvair.mapper.apimapper;
 
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.lusuva.lusuvair.dtos.apidto.WaqiDataDto;
 import fr.lusuva.lusuvair.entities.AirQuality;
 import fr.lusuva.lusuvair.entities.Particle;
@@ -13,7 +10,8 @@ public class ApiMapper {
 	
 	   public AirQuality convertToEntity(WaqiDataDto waqiDataDto) {
 		   AirQuality airQuality = new AirQuality();
-		   LocalDateTime date = LocalDateTime.parse(waqiDataDto.getDataDto().getTime().getS());
+//		   LocalDateTime date = LocalDateTime.parse(waqiDataDto.getDataDto().getTime().getS());
+		   String date = waqiDataDto.getDataDto().getTime().getS();
 		   airQuality.setDate(date);
 		   return airQuality;  
 	   }

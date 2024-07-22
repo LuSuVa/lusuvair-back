@@ -2,7 +2,7 @@ package fr.lusuva.lusuvair.dtos.apidto;
 
 public class DataDto {
 
-	private int aqi;
+	private String aqi;
 	private int idx;
 	private AttributionDto[] attributionDto;
 	private CityDto cityDto;
@@ -26,7 +26,7 @@ public class DataDto {
 	 * @param forecast
 	 * @param debugDto
 	 */
-	public DataDto(int aqi, int idx, AttributionDto[] attributionDto, CityDto cityDto, String dominentPol,
+	public DataDto(String aqi, int idx, AttributionDto[] attributionDto, CityDto cityDto, String dominentPol,
 			IaqiDto iaqi, TimeDto time, ForecastDto forecast, DebugDto debugDto) {
 		super();
 		this.aqi = aqi;
@@ -42,7 +42,7 @@ public class DataDto {
 	/**
 	 * @return the aqi
 	 */
-	public int getAqi() {
+	public String getAqi() {
 		return aqi;
 	}
 	/**
@@ -96,7 +96,7 @@ public class DataDto {
 	/**
 	 * @param aqi the aqi to set
 	 */
-	public void setAqi(int aqi) {
+	public void setAqi(String aqi) {
 		this.aqi = aqi;
 	}
 	/**

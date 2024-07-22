@@ -63,6 +63,24 @@ public class Municipality {
 	public Municipality() {
 	}
 
+	/**
+	 * @param id
+	 * @param zipCode
+	 * @param name
+	 * @param population
+	 * @param region
+	 * @param department
+	 * @param airQualities
+	 */
+	public Municipality(int zipCode, String name, int population) {
+		super();
+		
+		this.zipCode = zipCode;
+		this.name = name;
+		this.population = population;
+
+	}
+
 	/** Getter of the id of the municipality
 	 * @return the id
 	 */
