@@ -20,6 +20,11 @@ public class MessagePostDto {
     private String content;
 
     /**
+     * Parent Message's id if present
+     */
+    private int parentMessageId = -1;
+
+    /**
      * Empty constructor
      */
     public MessagePostDto() {
@@ -32,10 +37,11 @@ public class MessagePostDto {
      * @param sectionId int
      * @param content   String
      */
-    public MessagePostDto(int sectionId, String content) {
+    public MessagePostDto(int sectionId, String content, int parentMessageId) {
         super();
         this.sectionId = sectionId;
         this.content = content;
+        this.parentMessageId = parentMessageId;
     }
 
     /**
@@ -57,6 +63,15 @@ public class MessagePostDto {
     }
 
     /**
+     * Get Parent Message Id
+     * 
+     * @return int
+     */
+    public int getParentMessageId() {
+        return parentMessageId;
+    }
+
+    /**
      * Set Section's id
      * 
      * @param sectionId
@@ -72,5 +87,14 @@ public class MessagePostDto {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * Set parent message id
+     * 
+     * @param parentMessageId
+     */
+    public void setParentMessageId(int parentMessageId) {
+        this.parentMessageId = parentMessageId;
     }
 }

@@ -1,13 +1,12 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -53,16 +52,22 @@ public class UserAccount {
 
     /** Notifications associated with the user */
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "USER_NOTIFICATION",
-            joinColumns = @JoinColumn(name = "ID_USER_ACCOUNT"),
-            inverseJoinColumns = @JoinColumn(name = "ID_NOTIFICATION")
-    )
+    @JoinTable(name = "USER_NOTIFICATION", joinColumns = @JoinColumn(name = "ID_USER_ACCOUNT"), inverseJoinColumns = @JoinColumn(name = "ID_NOTIFICATION"))
     private List<Notification> notifications;
 
     /** Messages created by the user */
     @OneToMany(mappedBy = "user")
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> ownMessages = new ArrayList<>();
+
+    /** Messages liked by the user */
+    @ManyToMany
+    @JoinTable(name = "USERS_LIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_MESSAGE"))
+    private List<Message> likedMessages;
+
+    /** Messages disliked by the user */
+    @ManyToMany
+    @JoinTable(name = "USERS_DISLIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_MESSAGE"))
+    private List<Message> dislikedMessages;
 
     /** Sections created by the user */
     @OneToMany(mappedBy = "user")
@@ -83,24 +88,21 @@ public class UserAccount {
     /**
      * Constructor for creating a UserAccount with specified details.
      *
-     * @param lastName the last name of the user
+     * @param lastName  the last name of the user
      * @param firstName the first name of the user
-     * @param email the email of the user
-     * @param password the password of the user
-     * @param role the role of the user
+     * @param email     the email of the user
+     * @param password  the password of the user
+     * @param roles     the roles of the user
      */
-    public UserAccount(String lastName, String firstName, String email, String password, String role) {
-        GrantedAuthority roleAuthority = new SimpleGrantedAuthority(role);
-        authorities = new ArrayList<>();
-        authorities.add(roleAuthority);
+    public UserAccount(String lastName, String firstName, String email, String password, String... roles) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
         this.password = password;
-    }
-
-    public UserDetails asUserDetails(){
-        return new User(email, password, authorities);
+        this.authorities = Arrays.asList(roles).stream()
+                .map(SimpleGrantedAuthority::new)
+                .map(GrantedAuthority.class::cast)
+                .toList();
     }
 
     /**
@@ -234,8 +236,8 @@ public class UserAccount {
      *
      * @return the messages created by the user
      */
-    public List<Message> getMessages() {
-        return messages;
+    public List<Message> getOwnMessages() {
+        return ownMessages;
     }
 
     /**
@@ -243,8 +245,80 @@ public class UserAccount {
      *
      * @param messages the new messages created by the user
      */
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+    public void setOwnMessages(List<Message> messages) {
+        this.ownMessages = messages;
+    }
+
+    /**
+     * Gets the messages liked by the user.
+     *
+     * @return the messages liked by the user
+     */
+    public List<Message> getLikedMessages() {
+        return likedMessages;
+    }
+
+    /**
+     * Sets the messages liked by the user.
+     *
+     * @param messages the new messages liked by the user
+     */
+    public void setLikedMessages(List<Message> likedMessages) {
+        this.likedMessages = likedMessages;
+    }
+
+    /**
+     * Add the message liked by the user.
+     *
+     * @param message the new message liked by the user
+     */
+    public void addLikedMessage(Message message) {
+        likedMessages.add(message);
+    }
+
+    /**
+     * Remove the message liked by the user.
+     *
+     * @param message the message unliked by the user
+     */
+    public void removeLikedMessage(Message message) {
+        likedMessages.remove(message);
+    }
+
+    /**
+     * Gets the messages disliked by the user.
+     *
+     * @return the messages disliked by the user
+     */
+    public List<Message> getDislikedMessages() {
+        return dislikedMessages;
+    }
+
+    /**
+     * Sets the messages disliked by the user.
+     *
+     * @param dislikedMessages the messages disliked by the user
+     */
+    public void setDislikedMessages(List<Message> dislikedMessages) {
+        this.dislikedMessages = dislikedMessages;
+    }
+
+    /**
+     * Add the message disliked by the user.
+     *
+     * @param message the new message disliked by the user
+     */
+    public void addDislikedMessage(Message message) {
+        dislikedMessages.add(message);
+    }
+
+    /**
+     * Remove the message disliked by the user.
+     *
+     * @param message the message undisliked by the user
+     */
+    public void removeDislikedMessage(Message message) {
+        dislikedMessages.add(message);
     }
 
     /**

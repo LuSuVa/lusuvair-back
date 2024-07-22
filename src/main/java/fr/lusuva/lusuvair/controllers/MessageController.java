@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.lusuva.lusuvair.dtos.message.MessagePostDto;
 import fr.lusuva.lusuvair.dtos.message.MessagePutDto;
+import fr.lusuva.lusuvair.dtos.message.MessageResponseDto;
 import fr.lusuva.lusuvair.entities.Message;
 import fr.lusuva.lusuvair.services.MessageService;
 import fr.lusuva.lusuvair.utils.ControllerUtils;
@@ -61,16 +62,17 @@ public class MessageController {
     @Operation(summary = "Create a Message")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content) })
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> post(@Valid @RequestBody MessagePostDto messagePostDto,
             @AuthenticationPrincipal UserDetails userDetails, BindingResult bindingResult) {
         checkErrors(bindingResult);
 
         Message message = messageService.create(messagePostDto, controllerUtils.getUserAccount(userDetails));
 
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(message);
+        return ResponseEntity.ok(new MessageResponseDto(message));
     }
 
     /**
@@ -81,7 +83,7 @@ public class MessageController {
     @Operation(summary = "Get all sections")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get all", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message[].class)) }) })
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDto[].class)) }) })
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(messageService.getAll());
@@ -96,11 +98,11 @@ public class MessageController {
     @Operation(summary = "Get a Message by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get the section correspondig to the id", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDto.class)) }),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(messageService.getById(id));
+        return ResponseEntity.ok(new MessageResponseDto(messageService.getById(id)));
     }
 
     /**
@@ -109,42 +111,83 @@ public class MessageController {
      * @param id            Path variable expected to be an id
      * @param messagePutDto Dto expected
      * @param bindingResult Error from validation
+     * @param userDetails   Authenticated user
      * @return 200 with JSON Message body, 400 if validation failed
      */
     @Operation(summary = "Update a Message")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateById(@PathVariable int id, @Valid @RequestBody MessagePutDto messagePutDto,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails) {
         checkErrors(bindingResult);
 
-        Message message = messageService.updateById(id, messagePutDto);
+        Message message = messageService.updateById(id, messagePutDto, userDetails);
 
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(message);
+        return ResponseEntity.ok(new MessageResponseDto(message));
     }
 
     /**
      * Delete a Message by id
      * The user must be an administrator
      * 
-     * @param id Path variable expected to be an id
+     * @param id          Path variable expected to be an id
+     * @param userDetails Authenticated user
      * @return 200, 404 if not found
      */
     @SuppressWarnings("rawtypes")
     @Operation(summary = "Delete a Message")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Message successfully deleted", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)) }),
+            @ApiResponse(responseCode = "200", description = "Message successfully deleted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity deleteById(@PathVariable int id) {
-        messageService.deleteById(id);
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity deleteById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+        messageService.deleteById(id, userDetails);
+
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Like a Message by id
+     * 
+     * @param id          int
+     * @param userDetails UserDetails
+     * @return 200
+     */
+    @SuppressWarnings("rawtypes")
+    @Operation(summary = "Like a Message")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message successfully liked", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
+    @PostMapping("/{id}/like")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity likeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+        messageService.like(id, userDetails);
+
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Dislike a Message by id
+     * 
+     * @param id          int
+     * @param userDetails UserDetails
+     * @return 200
+     */
+    @SuppressWarnings("rawtypes")
+    @Operation(summary = "Dislike a Message")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Message successfully liked", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
+    @PostMapping("/{id}/dislike")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity dislikeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+        messageService.dislike(id, userDetails);
 
         return ResponseEntity.ok().build();
     }

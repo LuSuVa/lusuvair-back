@@ -1,10 +1,12 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,15 +26,19 @@ public class Section {
     /** Id of the Section */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
 
     /** Name of the Section */
+    @Column(name = "NAME")
     private String name;
 
     /** Description of the Section */
+    @Column(name = "DESCRIPTION")
     private String description;
 
     /** Date and time when the section was created */
+    @Column(name = "DATE")
     private LocalDateTime date;
 
     /** The forum to which the section belongs */
@@ -51,7 +57,7 @@ public class Section {
      */
     @OneToMany(mappedBy = "section")
     @JsonIgnoreProperties("section")
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     /**
      * Default constructor for the Section class.

@@ -3,7 +3,6 @@ package fr.lusuva.lusuvair.controllers;
 import static fr.lusuva.lusuvair.utils.ControllerUtils.checkErrors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.lusuva.lusuvair.dtos.section.SectionPostDto;
 import fr.lusuva.lusuvair.dtos.section.SectionPutDto;
+import fr.lusuva.lusuvair.dtos.section.SectionResponseDto;
 import fr.lusuva.lusuvair.entities.Section;
 import fr.lusuva.lusuvair.services.SectionService;
 import fr.lusuva.lusuvair.utils.ControllerUtils;
@@ -55,12 +55,12 @@ public class SectionController {
      * @param sectionPostDto Dto expected
      * @param userDetails    Authenticated user
      * @param bindingResult  Validation errors
-     * @return 200 with section created in body, 404 if validation failed
+     * @return 200 with section created in body, 400 if validation failed
      */
     @Operation(summary = "Create a section")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Section successfully created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Section.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SectionResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content) })
     @PostMapping
     @PreAuthorize("hasRole('USER')")
@@ -70,7 +70,7 @@ public class SectionController {
 
         Section section = sectionService.create(sectionPostDto, controllerUtils.getUserAccount(userDetails));
 
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(section);
+        return ResponseEntity.ok(new SectionResponseDto(section));
     }
 
     /**
@@ -81,10 +81,10 @@ public class SectionController {
     @Operation(summary = "Get all sections")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get all", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Section[].class)) }) })
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SectionResponseDto[].class)) }) })
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(sectionService.getAll());
+        return ResponseEntity.ok(sectionService.getAll().stream().map(SectionResponseDto::new).toList());
     }
 
     /**
@@ -96,11 +96,11 @@ public class SectionController {
     @Operation(summary = "Get a section by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully get the section correspondig to the id", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Section.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SectionResponseDto.class)) }),
             @ApiResponse(responseCode = "404", description = "Section not found", content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(sectionService.getById(id));
+        return ResponseEntity.ok(new SectionResponseDto(sectionService.getById(id)));
     }
 
     /**
@@ -114,18 +114,18 @@ public class SectionController {
     @Operation(summary = "Update a section")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Section successfully created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Section.class)) }),
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SectionResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content),
             @ApiResponse(responseCode = "404", description = "Section not found", content = @Content) })
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateById(@PathVariable int id, @Valid @RequestBody SectionPutDto sectionPutDto,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails) {
         checkErrors(bindingResult);
 
-        Section section = sectionService.updateById(id, sectionPutDto);
+        Section section = sectionService.updateById(id, sectionPutDto, userDetails);
 
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(section);
+        return ResponseEntity.ok(new SectionResponseDto(section));
     }
 
     /**
@@ -138,13 +138,12 @@ public class SectionController {
     @SuppressWarnings("rawtypes")
     @Operation(summary = "Delete a section")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Section successfully deleted", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = Section.class)) }),
+            @ApiResponse(responseCode = "200", description = "Section successfully deleted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Section not found", content = @Content) })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity deleteById(@PathVariable int id) {
-        sectionService.deleteById(id);
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity deleteById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+        sectionService.deleteById(id, userDetails);
 
         return ResponseEntity.ok().build();
     }

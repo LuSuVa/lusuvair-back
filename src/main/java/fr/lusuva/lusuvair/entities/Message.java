@@ -1,6 +1,7 @@
 package fr.lusuva.lusuvair.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,11 +12,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 /**
- * Represents a message entity with an ID, likes, dislikes, date, section, and parent message.
+ * Represents a message entity with an ID, likes, dislikes, date, section, and
+ * parent message.
  */
 @Entity
 public class Message {
@@ -24,14 +28,6 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    /** Number of likes for the message */
-    @Column(name = "NUMBER_LIKE")
-    private int like;
-
-    /** Number of dislikes for the message */
-    @Column(name = "NUMBER_DISLIKE")
-    private int dislike;
 
     /** Content */
     @Column(name = "CONTENT")
@@ -50,15 +46,28 @@ public class Message {
     /** The parent message, if this message is a reply */
     @ManyToOne
     @JoinColumn(name = "ID_PARENT_MESSAGE")
+    @JsonIgnoreProperties("childrenMessages")
     private Message parentMessage;
 
     /** The children messages */
     @OneToMany(mappedBy = "parentMessage")
-    private List<Message> childrenMessages;
+    @JsonIgnoreProperties("parentMessage")
+    private List<Message> childrenMessages = new ArrayList<>();
+
+    /** User that have liked this message */
+    @ManyToMany
+    @JoinTable(name = "USERS_LIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_MESSAGE"), inverseJoinColumns = @JoinColumn(name = "ID_USER"))
+    private List<UserAccount> usersLiked = new ArrayList<>();
+
+    /** User that have disliked this message */
+    @ManyToMany
+    @JoinTable(name = "USERS_DISLIKED_MESSAGES", joinColumns = @JoinColumn(name = "ID_MESSAGE"), inverseJoinColumns = @JoinColumn(name = "ID_USER"))
+    private List<UserAccount> usersDisliked = new ArrayList<>();
 
     /** The user who posted the message */
     @ManyToOne
     @JoinColumn(name = "ID_USER")
+    @JsonIgnoreProperties({ "sections", "password", "authorities", "notifications", "messages" })
     private UserAccount user;
 
     /**
@@ -83,42 +92,6 @@ public class Message {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * Gets the number of likes for the message.
-     *
-     * @return the number of likes
-     */
-    public int getLike() {
-        return like;
-    }
-
-    /**
-     * Sets the number of likes for the message.
-     *
-     * @param like the new number of likes
-     */
-    public void setLike(int like) {
-        this.like = like;
-    }
-
-    /**
-     * Gets the number of dislikes for the message.
-     *
-     * @return the number of dislikes
-     */
-    public int getDislike() {
-        return dislike;
-    }
-
-    /**
-     * Sets the number of dislikes for the message.
-     *
-     * @param dislike the new number of dislikes
-     */
-    public void setDislike(int dislike) {
-        this.dislike = dislike;
     }
 
     /**
@@ -209,6 +182,78 @@ public class Message {
      */
     public void setChildrenMessages(List<Message> childrenMessages) {
         this.childrenMessages = childrenMessages;
+    }
+
+    /**
+     * Gets Users who liked this message
+     * 
+     * @return List of UserAccount
+     */
+    public List<UserAccount> getUsersLiked() {
+        return usersLiked;
+    }
+
+    /**
+     * Gets Users who disliked this message
+     * 
+     * @return List of UserAccount
+     */
+    public List<UserAccount> getUsersDisliked() {
+        return usersDisliked;
+    }
+
+    /**
+     * Sets Users who liked this message
+     * 
+     * @param usersLiked List of UserAccount
+     */
+    public void setUsersLiked(List<UserAccount> usersLiked) {
+        this.usersLiked = usersLiked;
+    }
+
+    /**
+     * Sets Users who disliked this message
+     * 
+     * @param usersLiked List of UserAccount
+     */
+    public void setUsersDisliked(List<UserAccount> usersDisliked) {
+        this.usersDisliked = usersDisliked;
+    }
+
+    /**
+     * Adds User who liked this message
+     * 
+     * @param userAccount UserAccount
+     */
+    public void addUsersLiked(UserAccount userAccount){
+        usersLiked.add(userAccount);
+    }
+
+    /**
+     * Removes User who liked this message
+     * 
+     * @param userAccount UserAccount
+     */
+    public void removeUsersLiked(UserAccount userAccount){
+        usersLiked.remove(userAccount);
+    }
+
+     /**
+     * Adds User who disliked this message
+     * 
+     * @param userAccount UserAccount
+     */
+    public void addUsersDisliked(UserAccount userAccount){
+        usersDisliked.add(userAccount);
+    }
+
+    /**
+     * Removes User who disliked this message
+     * 
+     * @param userAccount UserAccount
+     */
+    public void removeUsersDisliked(UserAccount userAccount){
+        usersDisliked.remove(userAccount);
     }
 
     /**
