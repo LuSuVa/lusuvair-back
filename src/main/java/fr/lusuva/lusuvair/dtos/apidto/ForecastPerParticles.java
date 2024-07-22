@@ -1,52 +1,66 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
+/**
+ * The ForecastPerParticles class represents the forecast data for specific particles.
+ * It includes the name of the particle and an array of DataForecast objects.
+ */
 public class ForecastPerParticles {
-	private String name;
-	private DataForecast[] dataForecast;
+    
+    private String name;
+    private DataForecast[] dataForecast;
 
-	/**
-	 * 
-	 */
-	public ForecastPerParticles() {
-		super();
-	}
+    /**
+     * Default constructor for ForecastPerParticles.
+     */
+    public ForecastPerParticles() {
+        super();
+    }
 
-	/**
-	 * @param name
-	 * @param dataForecast
-	 */
-	public ForecastPerParticles(String name, DataForecast[] dataForecast) {
-		super();
-		this.name = name;
-		this.dataForecast = dataForecast;
-	}
+    /**
+     * Parameterized constructor for ForecastPerParticles.
+     *
+     * @param name the name of the particle
+     * @param dataForecast an array of DataForecast objects representing the forecast data
+     */
+    public ForecastPerParticles(String name, DataForecast[] dataForecast) {
+        super();
+        this.name = name;
+        this.dataForecast = dataForecast;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * Gets the name of the particle.
+     *
+     * @return the name of the particle
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return the dataForecast
-	 */
-	public DataForecast[] getDataForecast() {
-		return dataForecast;
-	}
+    /**
+     * Sets the name of the particle.
+     *
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * Gets the array of DataForecast objects.
+     *
+     * @return the array of DataForecast objects
+     */
+    public DataForecast[] getDataForecast() {
+        return dataForecast;
+    }
 
-	/**
-	 * @param dataForecast the dataForecast to set
-	 */
-	public void setDataForecast(DataForecast[] dataForecast) {
-		this.dataForecast = dataForecast;
-	}
-
+    /**
+     * Sets the array of DataForecast objects.
+     *
+     * @param dataForecast the array of DataForecast objects to set
+     */
+    public void setDataForecast(DataForecast[] dataForecast) {
+        this.dataForecast = dataForecast;
+    }
 }

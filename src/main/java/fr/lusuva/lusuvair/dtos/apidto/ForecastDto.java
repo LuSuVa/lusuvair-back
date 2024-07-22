@@ -1,34 +1,45 @@
 package fr.lusuva.lusuvair.dtos.apidto;
 
+/**
+ * The ForecastDto class represents the data transfer object for forecast information.
+ * It includes the daily forecast data.
+ */
 public class ForecastDto {
-	private DailyDto daily;
+    
+    private DailyDto daily;
 
-	/**
-	 * 
-	 */
-	public ForecastDto() {
-		super();
-	}
+    /**
+     * Default constructor for ForecastDto.
+     */
+    public ForecastDto() {
+        super();
+    }
 
-	/**
-	 * @param daily
-	 */
-	public ForecastDto(DailyDto daily) {
-		super();
-		this.daily = daily;
-	}
+    /**
+     * Parameterized constructor for ForecastDto.
+     *
+     * @param daily the daily forecast data
+     */
+    public ForecastDto(DailyDto daily) {
+        super();
+        this.daily = daily;
+    }
 
-	/**
-	 * @return the daily
-	 */
-	public DailyDto getDaily() {
-		return daily;
-	}
+    /**
+     * Gets the daily forecast data.
+     *
+     * @return the daily forecast data
+     */
+    public DailyDto getDaily() {
+        return daily;
+    }
 
-	/**
-	 * @param daily the daily to set
-	 */
-	public void setDaily(DailyDto daily) {
-		this.daily = daily;
-	}
+    /**
+     * Sets the daily forecast data.
+     *
+     * @param daily the daily forecast data to set
+     */
+    public void setDaily(DailyDto daily) {
+        this.daily = daily;
+    }
 }
