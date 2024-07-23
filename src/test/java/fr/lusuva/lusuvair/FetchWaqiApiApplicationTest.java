@@ -1,14 +1,12 @@
 package fr.lusuva.lusuvair;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times; // Import for times
-import static org.mockito.ArgumentMatchers.any; // Import for any
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any; // Import for any
+import static org.mockito.Mockito.times; // Import for times
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +25,7 @@ import fr.lusuva.lusuvair.services.AirQualityService;
 import fr.lusuva.lusuvair.services.MunicipalityService;
 import fr.lusuva.lusuvair.services.ParticleService;
 
-public class FetchApiApplicationTest {
+public class FetchWaqiApiApplicationTest {
 
 	@Mock
 	private ParticleService particleService;
@@ -42,7 +40,7 @@ public class FetchApiApplicationTest {
 	private RestTemplate restTemplate;
 
 	@InjectMocks
-	private FetchApiApplication fetchApiApplication;
+	private FetchWaqiApiApplication fetchWaqiApiApplication;
 
 	@BeforeEach
 	public void setup() {
@@ -50,34 +48,31 @@ public class FetchApiApplicationTest {
 	}
 
 	@Test
-	public void testAddParticle_ValidParticle() {
-		Map<String, Double> particles = new HashMap<>();
+	public void testBuildParticle_ValidParticle() {
 		ParticleDto particleDto = new ParticleDto();
 		particleDto.setV(10.0);
+		
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto);
 
-		fetchApiApplication.addParticleToMap(particles, "pm10", particleDto);
-
-		assertEquals(1, particles.size());
-		assertEquals(10.0, particles.get("pm10"));
+		assertEquals("pm10", particle.getName());
+		assertEquals(10.0, particle.getQuantity());
 	}
 
 	@Test
-	public void testAddParticle_NullParticle() {
-		Map<String, Double> particles = new HashMap<>();
-		fetchApiApplication.addParticleToMap(particles, "pm10", null);
+	public void testBuildParticle_NullParticle() {
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", null);
 
-		assertTrue(particles.isEmpty());
+		assertTrue(particle == null);
 	}
 
 	@Test
-	public void testAddParticleToMap_ZeroValueParticle() {
-		Map<String, Double> particles = new HashMap<>();
+	public void testBuildParticleToMap_ZeroValueParticle() {
 		ParticleDto particleDto = new ParticleDto();
 		particleDto.setV(0.0);
 
-		fetchApiApplication.addParticleToMap(particles, "pm10", particleDto);
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto);
 
-		assertTrue(particles.isEmpty());
+		assertTrue(particle == null);
 	}
 
 	@Test
@@ -92,9 +87,9 @@ public class FetchApiApplicationTest {
 		when(restTemplate.getForObject(
 				"http://api.waqi.info/feed/Paris/?token=01eb30b0ce9ad323162d0394e6b3446231f203cf", WaqiDataDto.class))
 				.thenReturn(waqiData);
-		fetchApiApplication.fetchDataAndPersist();
+		fetchWaqiApiApplication.fetchDataAndPersist(municipality);
 
-		verify(particleService, times(10)).insertParticle(any(Particle.class));
+		verify(particleService, times(9)).insertParticle(any(Particle.class));
 		verify(airQualityService, times(1)).insertAirQuality(any(AirQuality.class));
 	}
 

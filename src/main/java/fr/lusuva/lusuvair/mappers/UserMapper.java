@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.mapper;
+package fr.lusuva.lusuvair.mappers;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

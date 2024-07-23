@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.mapper.apimapper;
+package fr.lusuva.lusuvair.mappers.api;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

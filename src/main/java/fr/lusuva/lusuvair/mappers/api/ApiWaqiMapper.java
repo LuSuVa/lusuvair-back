@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.mapper.apimapper;
+package fr.lusuva.lusuvair.mappers.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import fr.lusuva.lusuvair.entities.Particle;
 /**
  * Utility class for mapping data transfer objects (DTOs) from the API to entity objects used in the application.
  */
-public class ApiMapper {
+public class ApiWaqiMapper {
 
     /**
      * Converts a {@link WaqiDataDto} object to an {@link AirQuality} entity.

@@ -10,7 +10,7 @@ import fr.lusuva.lusuvair.dtos.auth.JwtAuthenticationResponse;
 import fr.lusuva.lusuvair.dtos.auth.UserLoginDto;
 import fr.lusuva.lusuvair.dtos.auth.UserRegisterDto;
 import fr.lusuva.lusuvair.entities.UserAccount;
-import fr.lusuva.lusuvair.mapper.UserMapper;
+import fr.lusuva.lusuvair.mappers.UserMapper;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 import jakarta.annotation.PostConstruct;
 
