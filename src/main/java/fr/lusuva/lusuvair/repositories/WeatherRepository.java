@@ -2,27 +2,28 @@ package fr.lusuva.lusuvair.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.lusuva.lusuvair.entities.Municipality;
 import fr.lusuva.lusuvair.entities.Weather;
 
 /**
- * Repository interface for managing {@link Weather} entities.
+ * Repository interface for managing Weather entities.
  */
 public interface WeatherRepository extends JpaRepository<Weather, Integer> {
-	
+    
     /**
-     * Finds a {@link Weather} entity by its id.
+     * Finds a Weather entity by its ID.
      * 
-     * @param id the id of the Weather entity
-     * @return the Weather entity with the specified id, or {@code null} if none found
+     * @param id the ID of the Weather entity
+     * @return the Weather entity with the specified ID, or {@code null} if none found
      */
     Weather findById(int id);
     
     /**
-     * Finds a {@link Weather} entity by its associated {@link Municipality}.
+     * Finds a Weather entity by the ID of its associated Municipality.
      * 
-     * @param municipality the municipality associated with the Weather entity
-     * @return the Weather entity associated with the specified municipality, or {@code null} if none found
+     * @param id the ID of the Municipality
+     * @return the Weather entity associated with the specified Municipality ID, or {@code null} if none found
      */
-    Weather findByMunicipality(Municipality municipality);
+    Weather findByMunicipalityId(int id);
+    
+    Weather findByMunicipalityName(String name);
 }
