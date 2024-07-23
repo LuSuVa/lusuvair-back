@@ -25,5 +25,11 @@ public interface WeatherRepository extends JpaRepository<Weather, Integer> {
      */
     Weather findByMunicipalityId(int id);
     
+    /**
+     * Finds a Weather entity by the name of its associated Municipality.
+     * 
+     * @param name the name of the Municipality
+     * @return the Weather entity associated with the specified Municipality name, or {@code null} if none found
+     */
     Weather findByMunicipalityName(String name);
 }
