@@ -1,54 +1,61 @@
 package fr.lusuva.lusuvair.dtos.apiweatherdto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import fr.lusuva.lusuvair.deserializers.ObservationDeserializer;
 
 /**
- * Dto corresponding to the response of Weather API
+ * DTO corresponding to the response of the Weather API.
  */
 public class WeatherTypeDto {
 
-	private StationDto station;
+    /** The weather station details */
+    private StationDto station;
 
-	/**
-	 * Object observation
-	 * 
-	 * It has a particular deserializer because response JSON can be ObservationDto
-	 * or an empty array
-	 * 
-	 * So it must be Object to receive both and can be casted later
-	 */
-	private ObservationDto observation;
+    /**
+     * Object observation
+     * 
+     * It has a particular deserializer because the response JSON can be 
+     * an ObservationDto or an empty array. 
+     * So it must be Object to receive both and can be cast later.
+     */
+    private ObservationDto observation;
 
-	/**
-	 * @return the station
-	 */
-	public StationDto getStation() {
-		return station;
-	}
+    /**
+     * Returns the weather station details.
+     * 
+     * @return the station
+     */
+    public StationDto getStation() {
+        return station;
+    }
 
-	/**
-	 * @param station the station to set
-	 */
-	public void setStation(StationDto station) {
-		this.station = station;
-	}
+    /**
+     * Sets the weather station details.
+     * 
+     * @param station the station to set
+     */
+    public void setStation(StationDto station) {
+        this.station = station;
+    }
 
-	/**
-	 * @return the observation
-	 */
-	public ObservationDto getObservation() {
-		return observation;
-	}
+    /**
+     * Returns the observation details.
+     * 
+     * @return the observation
+     */
+    public ObservationDto getObservation() {
+        return observation;
+    }
 
-	/**
-	 * @param observation the observation to set
-	 */
-	@JsonDeserialize(using = ObservationDeserializer.class)
-	public void setObservation(Object observation) {
-		if (observation instanceof ObservationDto)
-			this.observation = (ObservationDto) observation;
-	}
-
+    /**
+     * Sets the observation details.
+     * 
+     * @param observation the observation to set
+     */
+    @JsonDeserialize(using = ObservationDeserializer.class)
+    public void setObservation(Object observation) {
+        if (observation instanceof ObservationDto) {
+            this.observation = (ObservationDto) observation;
+        }
+    }
 }

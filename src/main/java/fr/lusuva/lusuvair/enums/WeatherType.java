@@ -1,5 +1,8 @@
 package fr.lusuva.lusuvair.enums;
 
+/**
+ * Enum representing various types of weather conditions.
+ */
 public enum WeatherType {
     SUNNY(0, "Sunny"),
     PARTLY_CLOUDY(1, "Partly Cloudy"),
@@ -93,27 +96,47 @@ public enum WeatherType {
     private final int code;
     private final String description;
 
+    /**
+     * Constructs a WeatherType enum with the specified code and description.
+     * 
+     * @param code the unique code representing the weather type
+     * @param description the description of the weather type
+     */
     WeatherType(int code, String description) {
         this.code = code;
         this.description = description;
     }
 
+    /**
+     * Gets the code representing the weather type.
+     * 
+     * @return the code
+     */
     public int getCode() {
         return code;
     }
 
+    /**
+     * Gets the description of the weather type.
+     * 
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Returns the WeatherType enum constant corresponding to the specified code.
+     * 
+     * @param weatherCode the code representing the weather type
+     * @return the corresponding WeatherType enum constant, or null if no match is found
+     */
     public static WeatherType getWeatherType(int weatherCode) {
-        for (WeatherType code : WeatherType.values()) {
-            if (code.getCode() == weatherCode) {
-                return code;
+        for (WeatherType type : WeatherType.values()) {
+            if (type.getCode() == weatherCode) {
+                return type;
             }
         }
         return null;
     }
-
 }
-

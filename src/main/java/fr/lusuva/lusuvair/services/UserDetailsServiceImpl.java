@@ -13,31 +13,44 @@ import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 
 /**
- * UserDetailsService Implementation
+ * Implementation of the UserDetailsService interface.
+ * 
+ * This service is used by Spring Security to retrieve user details for authentication.
+ * It interacts with the UserAccountRepository to fetch user details based on the username.
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
-     * Autowired UserAccountRepository
+     * Repository for accessing UserAccount data.
      */
     @Autowired
     private UserAccountRepository userAccountRepository;
 
     /**
-     * Logger
+     * Logger for logging debug and error messages.
      */
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
+    /**
+     * Loads user details by username.
+     * 
+     * This method fetches the UserAccount entity from the repository using the provided username.
+     * If the user is not found, it throws UsernameNotFoundException.
+     * 
+     * @param username the username of the user to be loaded
+     * @return UserDetails containing the user's information
+     * @throws UsernameNotFoundException if no user is found with the given username
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.debug("Entering in loadUserByUsername Method...");
+        logger.debug("Entering loadUserByUsername method...");
         UserAccount user = userAccountRepository.findByEmail(username);
         if (user == null) {
             logger.error("Username not found: " + username);
-            throw new UsernameNotFoundException("could not found user..!!");
+            throw new UsernameNotFoundException("User not found.");
         }
-        logger.info("User Authenticated Successfully..!!!");
+        logger.info("User authenticated successfully.");
         return new CustomUserDetails(user);
     }
 }
