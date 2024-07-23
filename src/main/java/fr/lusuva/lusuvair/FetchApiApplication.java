@@ -95,6 +95,7 @@ public class FetchApiApplication implements CommandLineRunner {
                 String date = waqiData.getDataDto().getTime().getS();
                 // airQualityService.deleteByDate(date);
 
+
                 AirQuality airQuality = new AirQuality();
                 airQuality.setDate(date);
                 airQuality.setMunicipality(municipality);
@@ -125,7 +126,7 @@ public class FetchApiApplication implements CommandLineRunner {
      * @param key         The name of the particle
      * @param particleDto The particle data transfer object containing particle information
      */
-    private void addParticleToMap(Map<String, Double> particles, String key, ParticleDto particleDto) {
+    public void addParticleToMap(Map<String, Double> particles, String key, ParticleDto particleDto) {
         if (particleDto != null && particleDto.getV() != 0) {
             particles.put(key, particleDto.getV());
             Particle particleEntity = new Particle();

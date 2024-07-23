@@ -24,8 +24,7 @@ import fr.lusuva.lusuvair.services.WeatherService;
 
 /**
  * The FetchApiWeatherApplication class fetches weather data from the Meteo
- * Concept API.
- * It stores relevant weather information in a database.
+ * Concept API. It stores relevant weather information in a database.
  */
 @SpringBootApplication
 @EnableScheduling
@@ -43,9 +42,9 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	@Value("${token.signing.key.apiWeather}")
 	private String apiWeatherToken;
 
-    /**
-     * Service for handling operations related to municipalities.
-     */
+	/**
+	 * Service for handling operations related to municipalities.
+	 */
 	@Autowired
 	private MunicipalityService municipalityService;
 
@@ -76,8 +75,8 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	}
 
 	/**
-     * Scheduled task to fetch weather information for each municipality daily.
-     */
+	 * Scheduled task to fetch weather information for each municipality daily.
+	 */
 	@Scheduled(cron = "0 0 * * * ?")
 	public void fetchApiForEachMunicipalities() {
 		List<Municipality> municipalities = municipalityService.getMunicipalities();
@@ -85,26 +84,22 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	}
 
 	/**
-     * Fetches weather information from an external API for a given municipality.
-     *
-     * @param municipality The municipality object for which weather information is fetched.
-     */
+	 * Fetches weather information from an external API for a given municipality.
+	 *
+	 * @param municipality The municipality object for which weather information is
+	 *                     fetched.
+	 */
 	public void fetchApi(Municipality municipality) {
 		logger.info("Begin fetch API Weather for " + municipality.getName());
 		RestTemplate template = new RestTemplate();
 
 		StringBuilder forecastStringBuilder = new StringBuilder();
-		forecastStringBuilder.append("https://api.meteo-concept.com/api/forecast/daily?token=")
-				.append(apiWeatherToken)
-				.append("&insee=")
-				.append(municipality.getInseeCode());
+		forecastStringBuilder.append("https://api.meteo-concept.com/api/forecast/daily?token=").append(apiWeatherToken)
+				.append("&insee=").append(municipality.getInseeCode());
 
 		StringBuilder observationsStringBuilder = new StringBuilder();
 		observationsStringBuilder.append("https://api.meteo-concept.com/api/observations/around?token=")
-				.append(apiWeatherToken)
-				.append("&insee=")
-				.append(municipality.getInseeCode())
-				.append("&radius=50");
+				.append(apiWeatherToken).append("&insee=").append(municipality.getInseeCode()).append("&radius=50");
 
 		ResponseDto responseDto = template.getForObject(forecastStringBuilder.toString(), ResponseDto.class);
 		WeatherTypeDto[] weatherTypeDtos = template.getForObject(observationsStringBuilder.toString(),
