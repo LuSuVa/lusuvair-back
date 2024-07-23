@@ -17,9 +17,8 @@ import fr.lusuva.lusuvair.dtos.apiweatherdto.ResponseDto;
 import fr.lusuva.lusuvair.dtos.apiweatherdto.WeatherTypeDto;
 import fr.lusuva.lusuvair.entities.Municipality;
 import fr.lusuva.lusuvair.entities.Weather;
-import fr.lusuva.lusuvair.mapper.apimapper.ApiWeatherMapper;
+import fr.lusuva.lusuvair.mappers.api.ApiWeatherMapper;
 import fr.lusuva.lusuvair.services.MunicipalityService;
-import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 import fr.lusuva.lusuvair.services.WeatherService;
 
 /**
@@ -28,7 +27,7 @@ import fr.lusuva.lusuvair.services.WeatherService;
  */
 @SpringBootApplication
 @EnableScheduling
-public class FetchApiWeatherApplication implements CommandLineRunner {
+public class FetchWeatherApiApplication implements CommandLineRunner {
 
 	/**
 	 * Service to handle weather-related database operations.
@@ -39,7 +38,7 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	/**
 	 * API token for accessing the Meteo Concept API.
 	 */
-	@Value("${token.signing.key.apiWeather}")
+	@Value("${weather.api.token}")
 	private String apiWeatherToken;
 
 	/**
@@ -51,7 +50,7 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	/**
 	 * Logger
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FetchWeatherApiApplication.class);
 
 	/**
 	 * The main method that launches the Spring Boot application.
@@ -59,7 +58,7 @@ public class FetchApiWeatherApplication implements CommandLineRunner {
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(FetchApiWeatherApplication.class, args);
+		SpringApplication.run(FetchWeatherApiApplication.class, args);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.config;
+package fr.lusuva.lusuvair.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import fr.lusuva.lusuvair.filter.JwtAuthFilter;
+import fr.lusuva.lusuvair.filters.JwtAuthFilter;
 import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 
 /**
@@ -108,12 +108,7 @@ public class SecurityConfig {
 						"/messages",
 						"/messages/**")
 				.permitAll()
-				.anyRequest().authenticated()
-		// .requestMatchers("/logout").authenticated()
-		// .requestMatchers("/townList").authenticated()
-		// .requestMatchers("/deleteTown/**").hasRole("ADMIN")
-		// .anyRequest().denyAll()
-		)
+				.anyRequest().authenticated())
 				.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement((session) -> session
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

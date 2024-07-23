@@ -1,4 +1,4 @@
-package fr.lusuva.lusuvair.filter;
+package fr.lusuva.lusuvair.filters;
 
 import java.io.IOException;
 
