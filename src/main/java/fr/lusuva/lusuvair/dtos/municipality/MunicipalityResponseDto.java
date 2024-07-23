@@ -2,18 +2,35 @@ package fr.lusuva.lusuvair.dtos.municipality;
 
 import fr.lusuva.lusuvair.entities.Municipality;
 
+/**
+ * Data Transfer Object for Municipality responses.
+ */
 public class MunicipalityResponseDto {
     
-    private int id;
-    private String name;
-    private int insee;
-    private int code;
-    
     /**
-     * @param id
-     * @param name
-     * @param insee
-     * @param code
+     * The unique identifier of the municipality.
+     */
+    private int id;
+
+    /**
+     * The name of the municipality.
+     */
+    private String name;
+
+    /**
+     * The INSEE code of the municipality.
+     */
+    private int insee;
+
+    /**
+     * The ZIP code of the municipality.
+     */
+    private int code;
+
+    /**
+     * Constructs a MunicipalityResponseDto from a Municipality entity.
+     *
+     * @param municipality the Municipality entity to convert to a DTO
      */
     public MunicipalityResponseDto(Municipality municipality) {
         this.id = municipality.getId();
@@ -21,57 +38,77 @@ public class MunicipalityResponseDto {
         this.insee = municipality.getInseeCode();
         this.code = municipality.getZipCode();
     }
-    
+
     /**
-     * @return the id
+     * Gets the unique identifier of the municipality.
+     *
+     * @return the id of the municipality
      */
     public int getId() {
         return id;
     }
-    
+
     /**
+     * Sets the unique identifier of the municipality.
+     *
      * @param id the id to set
      */
     public void setId(int id) {
         this.id = id;
     }
-    
+
     /**
-     * @return the name
+     * Gets the name of the municipality.
+     *
+     * @return the name of the municipality
      */
     public String getName() {
         return name;
     }
+
     /**
+     * Sets the name of the municipality.
+     *
      * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
     }
+
     /**
-     * @return the insee
+     * Gets the INSEE code of the municipality.
+     *
+     * @return the INSEE code of the municipality
      */
     public int getInsee() {
         return insee;
     }
+
     /**
-     * @param insee the insee to set
+     * Sets the INSEE code of the municipality.
+     *
+     * @param insee the INSEE code to set
      */
     public void setInsee(int insee) {
         this.insee = insee;
     }
+
     /**
-     * @return the code
+     * Gets the ZIP code of the municipality.
+     *
+     * @return the ZIP code of the municipality
      */
     public int getCode() {
         return code;
     }
+
     /**
-     * @param code the code to set
+     * Sets the ZIP code of the municipality.
+     *
+     * @param code the ZIP code to set
      */
     public void setCode(int code) {
         this.code = code;
     }
-    
-    
 }
+
