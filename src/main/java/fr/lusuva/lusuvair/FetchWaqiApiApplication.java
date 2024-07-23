@@ -31,12 +31,21 @@ import fr.lusuva.lusuvair.services.ParticleService;
 @EnableScheduling
 public class FetchWaqiApiApplication implements CommandLineRunner {
 
+    /**
+	 * Service to handle particle-related database operations.
+	 */
     @Autowired
     private ParticleService particleService;
 
+    /**
+	 * Service to handle air-quality-related database operations.
+	 */
     @Autowired
     private AirQualityService airQualityService;
 
+    /**
+	 * Service to handle municipality-related database operations.
+	 */
     @Autowired
     private MunicipalityService municipalityService;
 
