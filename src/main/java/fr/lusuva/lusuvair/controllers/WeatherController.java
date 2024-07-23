@@ -37,8 +37,8 @@ public class WeatherController {
                      content = {@Content(mediaType ="application/json", schema = @Schema(implementation = Weather.class))})
     })
     @GetMapping
-    public List<Weather> getWeather() {
-        return weatherService.getAll();
+    public ResponseEntity<?> getWeather() {
+        return ResponseEntity.ok(weatherService.getAll().stream().map(WeatherResponseDto::new).toList());
     }
     
     /**
@@ -54,8 +54,8 @@ public class WeatherController {
                      content = {@Content(mediaType ="application/json", schema = @Schema(implementation = Weather.class))})
     })
     @GetMapping("/{id}")
-    public Weather getWeatherById(@PathVariable int id) {
-        return weatherService.getById(id);
+    public ResponseEntity<?> getWeatherById(@PathVariable int id) {
+        return ResponseEntity.ok(new WeatherResponseDto(weatherService.getById(id)));
     }
     
     /**
