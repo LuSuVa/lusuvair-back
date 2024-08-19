@@ -24,7 +24,7 @@ public class JwtService {
     /**
      * Jwt secret key
      */
-    @Value("${token.signing.key}")
+    @Value("${jwt.token.signing.key}")
     private String jwtSigningKey;
 
     /**
