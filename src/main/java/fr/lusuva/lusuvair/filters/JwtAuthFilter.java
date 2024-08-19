@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import fr.lusuva.lusuvair.configs.SecurityConfig;
 import fr.lusuva.lusuvair.services.JwtService;
 import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -43,6 +44,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
+
+        boolean isIgnoredPath = SecurityConfig.ignoredPaths.stream().anyMatch(path -> path.matches(request));
+
+        if (isIgnoredPath) {
+            filterChain.doFilter(request, response);
+        }
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);

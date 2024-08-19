@@ -1,5 +1,9 @@
 package fr.lusuva.lusuvair.configs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import fr.lusuva.lusuvair.filters.JwtAuthFilter;
@@ -26,6 +32,21 @@ import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+
+	public static final List<RequestMatcher> ignoredPaths = new ArrayList<RequestMatcher>(Arrays.asList(
+			new AntPathRequestMatcher("/"),
+			new AntPathRequestMatcher("/swagger-ui"),
+			new AntPathRequestMatcher("/swagger-ui/**"),
+			new AntPathRequestMatcher("/v3/api-docs/**"),
+			new AntPathRequestMatcher("/login"),
+			new AntPathRequestMatcher("/user/login"),
+			new AntPathRequestMatcher("/user/register"),
+			new AntPathRequestMatcher("/forums"),
+			new AntPathRequestMatcher("/forums/**"),
+			new AntPathRequestMatcher("/sections"),
+			new AntPathRequestMatcher("/sections/**"),
+			new AntPathRequestMatcher("/messages"),
+			new AntPathRequestMatcher("/messages/**")));
 
 	/**
 	 * Cors Configuration Source
