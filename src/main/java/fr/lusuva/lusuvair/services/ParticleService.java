@@ -26,15 +26,19 @@ public class ParticleService {
      * @param particle the Particle entity to be inserted
      */
     public void insertParticle(Particle particle) {
+        if (particle == null) {
+            return;
+        }
         particleRepository.save(particle);
     }
 
     /**
      * Deletes a Particle entity from the database based on its name and quantity.
-     * This method uses the ParticleRepository to remove the Particle entity that matches
+     * This method uses the ParticleRepository to remove the Particle entity that
+     * matches
      * the given name and quantity.
      *
-     * @param name the name of the Particle entity to be deleted
+     * @param name     the name of the Particle entity to be deleted
      * @param quantity the quantity of the Particle entity to be deleted
      */
     @Transactional
