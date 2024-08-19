@@ -1,5 +1,7 @@
 package fr.lusuva.lusuvair.dtos.auth;
 
+import java.util.List;
+
 /**
  * Dto usually used to send a Response containing a JWT
  */
@@ -8,6 +10,11 @@ public class JwtAuthenticationResponse {
      * Token
      */
     private String token;
+
+    /**
+     * User role
+     */
+    private List<String> role;
 
     /**
      * Empty constructor
@@ -21,9 +28,10 @@ public class JwtAuthenticationResponse {
      * 
      * @param token String
      */
-    public JwtAuthenticationResponse(String token) {
+    public JwtAuthenticationResponse(String token, List<String> role) {
         super();
         this.token = token;
+        this.role = role;
     }
 
     /**
@@ -36,11 +44,29 @@ public class JwtAuthenticationResponse {
     }
 
     /**
+     * Get role
+     * 
+     * @return String representing an user role
+     */
+    public List<String> getRole() {
+        return role;
+    }
+
+    /**
      * Set token
      * 
      * @param token
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     * Set role
+     * 
+     * @param role
+     */
+    public void setRole(List<String> role) {
+        this.role = role;
     }
 }

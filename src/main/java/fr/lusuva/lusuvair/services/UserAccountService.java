@@ -1,5 +1,7 @@
 package fr.lusuva.lusuvair.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +50,8 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN", "ROLE_USER"));
+		create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN",
+				"ROLE_USER"));
 		create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 		create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
@@ -83,7 +86,9 @@ public class UserAccountService {
 		create(userAccount);
 
 		var jwt = jwtService.generateToken(userAccount.getEmail());
-		return new JwtAuthenticationResponse(jwt);
+		List<String> roles = userAccount.getAuthorities().stream().map(authority -> authority.getAuthority()).toList();
+		
+		return new JwtAuthenticationResponse(jwt, roles);
 	}
 
 	/**
@@ -104,6 +109,8 @@ public class UserAccountService {
 		}
 
 		String jwt = jwtService.generateToken(UserMapper.toUserDetails(user).getUsername());
-		return new JwtAuthenticationResponse(jwt);
+		List<String> roles = user.getAuthorities().stream().map(authority -> authority.getAuthority()).toList();
+
+		return new JwtAuthenticationResponse(jwt, roles);
 	}
 }
