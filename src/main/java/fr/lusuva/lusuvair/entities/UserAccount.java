@@ -1,5 +1,6 @@
 package fr.lusuva.lusuvair.entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,6 +47,9 @@ public class UserAccount {
     /** Password of the user */
     private String password;
 
+    /** User is locked till this date */
+    private LocalDateTime suspendedTillDate = LocalDateTime.now().minusDays(1);
+
     /** Authorities granted to the user */
     @ElementCollection(fetch = FetchType.EAGER)
     private List<GrantedAuthority> authorities;
@@ -73,7 +77,7 @@ public class UserAccount {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Section> sections = new ArrayList<>();
-    
+
     @ManyToOne
     @JoinColumn(name = "ID_MUNICIPALITY")
     private Municipality municipality;
@@ -103,6 +107,10 @@ public class UserAccount {
                 .map(SimpleGrantedAuthority::new)
                 .map(GrantedAuthority.class::cast)
                 .toList();
+    }
+
+    public boolean isSuspended() {
+        return LocalDateTime.now().isBefore(suspendedTillDate);
     }
 
     /**
@@ -337,5 +345,23 @@ public class UserAccount {
      */
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    /**
+     * Get SuspendedTillDate
+     * 
+     * @return LocaldateTime
+     */
+    public LocalDateTime getSuspendedTillDate() {
+        return suspendedTillDate;
+    }
+
+    /**
+     * Set SuspendedTilldate
+     * 
+     * @param suspendedTillDate
+     */
+    public void setSuspendedTillDate(LocalDateTime suspendedTillDate) {
+        this.suspendedTillDate = suspendedTillDate;
     }
 }

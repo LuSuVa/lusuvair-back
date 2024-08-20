@@ -33,7 +33,7 @@ import fr.lusuva.lusuvair.services.UserDetailsServiceImpl;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-	public static final List<RequestMatcher> ignoredPaths = new ArrayList<RequestMatcher>(Arrays.asList(
+	public static final List<RequestMatcher> ignoredGetPaths = new ArrayList<RequestMatcher>(Arrays.asList(
 			new AntPathRequestMatcher("/"),
 			new AntPathRequestMatcher("/swagger-ui"),
 			new AntPathRequestMatcher("/swagger-ui/**"),
@@ -47,6 +47,10 @@ public class SecurityConfig {
 			new AntPathRequestMatcher("/sections/**"),
 			new AntPathRequestMatcher("/messages"),
 			new AntPathRequestMatcher("/messages/**")));
+
+	public static final List<RequestMatcher> ignoredPostPaths = new ArrayList<RequestMatcher>(Arrays.asList(
+			new AntPathRequestMatcher("/user/login"),
+			new AntPathRequestMatcher("/user/register")));
 
 	/**
 	 * Cors Configuration Source

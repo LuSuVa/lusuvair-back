@@ -159,17 +159,14 @@ public class MessageController {
      * @param userDetails UserDetails
      * @return 200
      */
-    @SuppressWarnings("rawtypes")
     @Operation(summary = "Like a Message")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Message successfully liked", content = @Content),
             @ApiResponse(responseCode = "404", description = "Message not found", content = @Content) })
     @PostMapping("/{id}/like")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity likeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
-        messageService.like(id, userDetails);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> likeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(messageService.like(id, userDetails));
     }
 
     /**
@@ -187,8 +184,6 @@ public class MessageController {
     @PostMapping("/{id}/dislike")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity dislikeById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
-        messageService.dislike(id, userDetails);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(messageService.dislike(id, userDetails));
     }
 }

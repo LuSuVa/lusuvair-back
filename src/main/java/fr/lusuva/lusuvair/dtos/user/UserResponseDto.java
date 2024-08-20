@@ -1,12 +1,16 @@
 package fr.lusuva.lusuvair.dtos.user;
 
+import java.time.LocalDateTime;
+
 import fr.lusuva.lusuvair.entities.UserAccount;
 
 /**
  * Data Transfer Object (DTO) for transferring user data between processes.
  * <p>
- * This DTO is specifically designed to encapsulate user account details such as ID, first name,
- * last name, and email address. It is primarily used for sending user data from the server to the client
+ * This DTO is specifically designed to encapsulate user account details such as
+ * ID, first name,
+ * last name, and email address. It is primarily used for sending user data from
+ * the server to the client
  * in a structured format.
  */
 public class UserResponseDto {
@@ -31,16 +35,24 @@ public class UserResponseDto {
      */
     private String email;
 
+    private boolean isSuspended;
+
+    private LocalDateTime suspendedTill;
+
     /**
-     * Constructs a new {@code UserResponseDto} object using details from a {@link UserAccount}.
+     * Constructs a new {@code UserResponseDto} object using details from a
+     * {@link UserAccount}.
      *
-     * @param userAccount the {@code UserAccount} object containing the user's account information
+     * @param userAccount the {@code UserAccount} object containing the user's
+     *                    account information
      */
     public UserResponseDto(UserAccount userAccount) {
         this.id = userAccount.getId();
         this.firstName = userAccount.getFirstName();
         this.lastName = userAccount.getLastName();
         this.email = userAccount.getEmail();
+        this.isSuspended = LocalDateTime.now().isBefore(userAccount.getSuspendedTillDate());
+        this.suspendedTill = userAccount.getSuspendedTillDate();
     }
 
     /**
@@ -113,5 +125,21 @@ public class UserResponseDto {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDateTime getSuspendedTill() {
+        return suspendedTill;
+    }
+
+    public void setSuspendedTill(LocalDateTime suspendedTill) {
+        this.suspendedTill = suspendedTill;
+    }
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void setSuspended(boolean isSuspended) {
+        this.isSuspended = isSuspended;
     }
 }

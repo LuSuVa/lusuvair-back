@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import fr.lusuva.lusuvair.dtos.message.MessageLikeResponseDto;
 import fr.lusuva.lusuvair.dtos.message.MessagePostDto;
 import fr.lusuva.lusuvair.dtos.message.MessagePutDto;
 import fr.lusuva.lusuvair.entities.Message;
@@ -137,9 +138,10 @@ public class MessageService {
      * @param id          int
      * @param userDetails UserDetails
      */
-    public void like(int id, UserDetails userDetails) {
+    public MessageLikeResponseDto like(int id, UserDetails userDetails) {
         Message message = getById(id);
         UserAccount user = controllerUtils.getUserAccount(userDetails);
+        boolean isLiked = false;
 
         if (message.getUsersDisliked().contains(user)) {
             message.removeUsersDisliked(user);
@@ -147,11 +149,15 @@ public class MessageService {
 
         if (message.getUsersLiked().contains(user)) {
             message.removeUsersLiked(user);
+            isLiked = false;
         } else {
             message.addUsersLiked(user);
+            isLiked = true;
         }
 
         messageRepository.save(message);
+
+        return new MessageLikeResponseDto(isLiked, false);
     }
 
     /**
@@ -160,9 +166,10 @@ public class MessageService {
      * @param id          int
      * @param userDetails UserDetails
      */
-    public void dislike(int id, UserDetails userDetails) {
+    public MessageLikeResponseDto dislike(int id, UserDetails userDetails) {
         Message message = getById(id);
         UserAccount user = controllerUtils.getUserAccount(userDetails);
+        boolean isDisliked = false;
 
         if (message.getUsersLiked().contains(user)) {
             message.removeUsersLiked(user);
@@ -170,11 +177,15 @@ public class MessageService {
 
         if (message.getUsersDisliked().contains(user)) {
             message.removeUsersDisliked(user);
+            isDisliked = false;
         } else {
             message.addUsersDisliked(user);
+            isDisliked = true;
         }
 
         messageRepository.save(message);
+
+        return new MessageLikeResponseDto(false, isDisliked);
     }
 
     /**

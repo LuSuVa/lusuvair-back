@@ -45,9 +45,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
 
-        boolean isIgnoredPath = SecurityConfig.ignoredPaths.stream().anyMatch(path -> path.matches(request));
+        boolean isIgnoredGetPath = SecurityConfig.ignoredGetPaths.stream().anyMatch(path -> path.matches(request))
+                && request.getMethod().equals("GET");
 
-        if (isIgnoredPath) {
+        boolean isIgnoredPostPath = SecurityConfig.ignoredPostPaths.stream().anyMatch(path -> path.matches(request))
+                && request.getMethod().equals("POST");
+
+        if (isIgnoredGetPath || isIgnoredPostPath) {
             filterChain.doFilter(request, response);
         }
 

@@ -1,5 +1,6 @@
 package fr.lusuva.lusuvair.entities;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +12,14 @@ public class CustomUserDetails extends UserAccount implements UserDetails {
 
     /** The username of the user */
     private String username;
-    
+
     /** The password of the user */
     private String password;
-    
+
     /** The authorities granted to the user */
     private Collection<? extends GrantedAuthority> authorities;
+
+    private boolean isNonLocked = true;
 
     /**
      * Constructs a new CustomUserDetails object based on the given UserAccount.
@@ -27,6 +30,7 @@ public class CustomUserDetails extends UserAccount implements UserDetails {
         this.username = byUsername.getEmail();
         this.password = byUsername.getPassword();
         this.authorities = byUsername.getAuthorities();
+        this.isNonLocked = !LocalDateTime.now().isBefore(byUsername.getSuspendedTillDate());
     }
 
     /**
@@ -78,14 +82,16 @@ public class CustomUserDetails extends UserAccount implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isNonLocked;
     }
 
     /**
-     * Indicates whether the user's credentials (password) has expired. This implementation
+     * Indicates whether the user's credentials (password) has expired. This
+     * implementation
      * always returns {@code true}.
      * 
-     * @return {@code true} if the credentials are non-expired, {@code false} otherwise
+     * @return {@code true} if the credentials are non-expired, {@code false}
+     *         otherwise
      */
     @Override
     public boolean isCredentialsNonExpired() {

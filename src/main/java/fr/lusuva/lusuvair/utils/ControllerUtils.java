@@ -17,7 +17,7 @@ import fr.lusuva.lusuvair.repositories.UserAccountRepository;
  */
 @Component
 public class ControllerUtils {
-    
+
     /**
      * Autowired UserAccountRepository
      */
@@ -26,13 +26,14 @@ public class ControllerUtils {
 
     /**
      * Get UserAccount from UserDetails
+     * 
      * @param userDetails UserDetails
      * @return UserAccount
      */
-    public UserAccount getUserAccount(UserDetails userDetails){
-        UserAccount userAccount = userAccountRepository.findByEmail(userDetails.getUsername());
+    public UserAccount getUserAccount(UserDetails userDetails) {
+        var userAccount = userAccountRepository.findByEmail(userDetails.getUsername());
 
-        if(userAccount == null){
+        if (userAccount == null) {
             throw new NoSuchElementException("User doesn't exist");
         }
 

@@ -9,14 +9,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.entities.CustomUserDetails;
-import fr.lusuva.lusuvair.entities.UserAccount;
 import fr.lusuva.lusuvair.repositories.UserAccountRepository;
 
 /**
  * Implementation of the UserDetailsService interface.
  * 
- * This service is used by Spring Security to retrieve user details for authentication.
- * It interacts with the UserAccountRepository to fetch user details based on the username.
+ * This service is used by Spring Security to retrieve user details for
+ * authentication.
+ * It interacts with the UserAccountRepository to fetch user details based on
+ * the username.
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -35,7 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /**
      * Loads user details by username.
      * 
-     * This method fetches the UserAccount entity from the repository using the provided username.
+     * This method fetches the UserAccount entity from the repository using the
+     * provided username.
      * If the user is not found, it throws UsernameNotFoundException.
      * 
      * @param username the username of the user to be loaded
@@ -45,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.debug("Entering loadUserByUsername method...");
-        UserAccount user = userAccountRepository.findByEmail(username);
+        var user = userAccountRepository.findByEmail(username);
         if (user == null) {
             logger.error("Username not found: " + username);
             throw new UsernameNotFoundException("User not found.");
