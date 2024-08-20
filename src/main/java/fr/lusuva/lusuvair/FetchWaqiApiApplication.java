@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,22 +33,28 @@ import fr.lusuva.lusuvair.services.ParticleService;
 public class FetchWaqiApiApplication implements CommandLineRunner {
 
     /**
-	 * Service to handle particle-related database operations.
-	 */
+     * Service to handle particle-related database operations.
+     */
     @Autowired
     private ParticleService particleService;
 
     /**
-	 * Service to handle air-quality-related database operations.
-	 */
+     * Service to handle air-quality-related database operations.
+     */
     @Autowired
     private AirQualityService airQualityService;
 
     /**
-	 * Service to handle municipality-related database operations.
-	 */
+     * Service to handle municipality-related database operations.
+     */
     @Autowired
     private MunicipalityService municipalityService;
+
+    /**
+     * API call
+     */
+    @Value("${api.call}")
+    private boolean apiCall;
 
     /**
      * Logger
@@ -72,7 +79,9 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        fetchApiForEachMunicipalities();
+        if (apiCall) {
+            fetchApiForEachMunicipalities();
+        }
     }
 
     /**
