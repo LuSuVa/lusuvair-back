@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 import fr.lusuva.lusuvair.entities.AirQuality;
+import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.repositories.AirQualityRepository;
 
 /**
@@ -69,5 +70,9 @@ public class AirQualityService {
         }
 
         return airQuality;
+    }
+    
+    public AirQuality getByMunicipalityName(String municipalityName) {
+        return airQualityRepository.findByMunicipalityName(municipalityName);
     }
 }

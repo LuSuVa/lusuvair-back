@@ -66,6 +66,7 @@ public class WeatherResponseDto {
      * @param weather the Weather entity to convert to a DTO
      */
     public WeatherResponseDto(Weather weather) {
+    	if(weather != null) {
         this.id = weather.getId();
         this.date = weather.getDate();
         this.municipality = new MunicipalityResponseDto(weather.getMunicipality());
@@ -76,6 +77,10 @@ public class WeatherResponseDto {
         this.wind = weather.getWind();
         this.dirWind = weather.getDirWind();
         this.probaRain = weather.getProbaRain();
+    	}
+    	else {
+    		System.out.println("weather is null");
+    	};
     }
 
     /**

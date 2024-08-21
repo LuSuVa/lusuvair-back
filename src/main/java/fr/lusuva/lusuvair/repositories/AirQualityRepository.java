@@ -3,6 +3,7 @@ package fr.lusuva.lusuvair.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.lusuva.lusuvair.entities.AirQuality;
+import fr.lusuva.lusuvair.entities.Weather;
 
 /**
  * Repository interface for managing {@link AirQuality} entities.
@@ -17,4 +18,6 @@ public interface AirQualityRepository extends JpaRepository<AirQuality, Integer>
      * @param date the date of the {@link AirQuality} records to delete
      */
     void deleteByDate(String date); 
+    
+    AirQuality findByMunicipalityName(String name);
 }

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.lusuva.lusuvair.dtos.AirQuality.AirQualityReponseDto;
+import fr.lusuva.lusuvair.dtos.weather.WeatherResponseDto;
+import fr.lusuva.lusuvair.entities.AirQuality;
+import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.services.AirQualityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -58,4 +61,21 @@ public class AirQualityController {
     public ResponseEntity<?> getById(@PathVariable int id) {
         return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getById(id)));
     }
+    
+    /**
+     * Get air quality data of a municipality by its name
+     *
+     * @param name the name of the municipality
+     * @return the air quality data of the municipality with the specified name
+     */
+    @Operation(summary = "Get the air quality data of the municipality by its name")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+                     description = "Municipality's air quality data in JSON format",
+                     content = {@Content(mediaType ="application/json", schema = @Schema(implementation = AirQuality.class))})
+    })
+    @GetMapping("/municipality/name/{name}")
+    public ResponseEntity<?> getWeatherByMunicipalityName(@PathVariable String name) {
+        return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getByMunicipalityName(name)));
+    } 
 }
