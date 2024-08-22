@@ -99,7 +99,7 @@ public class ForumController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ForumResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content) })
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> post(@Valid @RequestBody ForumPostDto forumPostDto,
             BindingResult bindingResult) {
         checkErrors(bindingResult);
