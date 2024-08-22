@@ -1,7 +1,10 @@
 package fr.lusuva.lusuvair.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import fr.lusuva.lusuvair.entities.AirQuality;
 import fr.lusuva.lusuvair.entities.Weather;
 
 /**
@@ -32,4 +35,6 @@ public interface WeatherRepository extends JpaRepository<Weather, Integer> {
      * @return the Weather entity associated with the specified Municipality name, or {@code null} if none found
      */
     Weather findByMunicipalityName(String name);
+    
+    List<Weather> findByMunicipalityNameContaining(String name);
 }

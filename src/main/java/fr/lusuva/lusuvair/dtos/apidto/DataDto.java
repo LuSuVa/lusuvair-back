@@ -7,7 +7,7 @@ package fr.lusuva.lusuvair.dtos.apidto;
  */
 public class DataDto {
 
-    private String aqi;
+    private int aqi;
     private int idx;
     private AttributionDto[] attributionDto;
     private CityDto cityDto;
@@ -37,7 +37,7 @@ public class DataDto {
      * @param forecast       the forecast data
      * @param debugDto       the debug data
      */
-    public DataDto(String aqi, int idx, AttributionDto[] attributionDto, CityDto cityDto, String dominentPol,
+    public DataDto(int aqi, int idx, AttributionDto[] attributionDto, CityDto cityDto, String dominentPol,
                    IaqiDto iaqi, TimeDto time, ForecastDto forecast, DebugDto debugDto) {
         super();
         this.aqi = aqi;
@@ -56,7 +56,7 @@ public class DataDto {
      *
      * @return the air quality index
      */
-    public String getAqi() {
+    public int getAqi() {
         return aqi;
     }
 
@@ -65,7 +65,7 @@ public class DataDto {
      *
      * @param aqi the air quality index to set
      */
-    public void setAqi(String aqi) {
+    public void setAqi(int aqi) {
         this.aqi = aqi;
     }
 

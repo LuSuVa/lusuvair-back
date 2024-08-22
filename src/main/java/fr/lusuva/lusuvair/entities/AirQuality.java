@@ -56,8 +56,12 @@ public class AirQuality {
     @ManyToOne
     @JoinColumn(name = "ID_MUNICIPALITY")
     private Municipality municipality;
+    
+    @Column(name = "AQI")
+    private int aqi;
 
-    /**
+
+	/**
      * Get id
      * @return int representing id
      */
@@ -136,4 +140,18 @@ public class AirQuality {
     public void setMunicipality(Municipality municipality) {
         this.municipality = municipality;
     }
+
+	/**
+	 * @return the aqi
+	 */
+	public int getAqi() {
+		return aqi;
+	}
+
+	/**
+	 * @param aqi the aqi to set
+	 */
+	public void setAqi(int aqi) {
+		this.aqi = aqi;
+	}
 }

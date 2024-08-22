@@ -6,8 +6,10 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.lusuva.lusuvair.entities.AirQuality;
 import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.repositories.WeatherRepository;
+import jakarta.persistence.NonUniqueResultException;
 
 /**
  * Service for managing weather data.
@@ -98,7 +100,12 @@ public class WeatherService {
      * @return the Weather entity associated with the specified Municipality name
      */
     public Weather getByMunicipalityName(String name) {
-        return weatherRepository.findByMunicipalityName(name);
+        try {
+        	return weatherRepository.findByMunicipalityName(name);
+        } catch (NonUniqueResultException e) {
+        	List<Weather> weather = weatherRepository.findByMunicipalityNameContaining(name);
+            return weather.get(0);
+        }
     }
     
     /**

@@ -88,7 +88,7 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
      * This method fetches air quality data from the WAQI API for each municipality
      * and persists it to the database. It is scheduled to run every 30 minutes.
      */
-    @Scheduled(cron = "0 */30 * * * ?")
+    @Scheduled(cron = "0 0 * * * ?")
     public void fetchApiForEachMunicipalities() {
         List<Municipality> municipalities = municipalityService.getMunicipalities();
         municipalities.forEach(this::fetchDataAndPersist);
@@ -130,12 +130,13 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
             AirQuality airQuality = new AirQuality();
             airQuality.setDate(date);
             airQuality.setMunicipality(municipality);
-
+            airQuality.setAqi(waqiData.getDataDto().getAqi());
             particles.forEach(particleService::insertParticle);
             airQuality.setParticles(particles);
 
             airQualityService.insertAirQuality(airQuality);
-
+            
+            logger.info("Fetched AQI: " + waqiData.getDataDto().getAqi());
             logger.info("Successfully fetch !");
         } else {
             logger.error("Failed to fetch API Waqi");

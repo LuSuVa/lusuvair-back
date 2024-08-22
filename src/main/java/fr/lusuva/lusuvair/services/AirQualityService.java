@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.transaction.Transactional;
 
 import fr.lusuva.lusuvair.entities.AirQuality;
@@ -73,6 +75,11 @@ public class AirQualityService {
     }
     
     public AirQuality getByMunicipalityName(String municipalityName) {
-        return airQualityRepository.findByMunicipalityName(municipalityName);
+    	try {
+            return airQualityRepository.findByMunicipalityName(municipalityName);
+        } catch (NonUniqueResultException e) {
+        	List<AirQuality> airQualities = airQualityRepository.findByMunicipalityNameContaining(municipalityName);
+            return airQualities.get(0);
+        }
     }
 }

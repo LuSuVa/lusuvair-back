@@ -16,6 +16,9 @@ public class AirQualityReponseDto {
     private String date;
     private MunicipalityResponseDto municipality;
     private List<ParticleResponseDto> particles;
+    
+    /** Air quality index */
+    private int aqi;
 
     /**
      * Default constructor.
@@ -31,11 +34,12 @@ public class AirQualityReponseDto {
      * @param municipality the municipality where the air quality measurement was taken
      * @param particles the list of particles measured
      */
-    public AirQualityReponseDto(String date, MunicipalityResponseDto municipality, List<ParticleResponseDto> particles) {
+    public AirQualityReponseDto(String date, MunicipalityResponseDto municipality, List<ParticleResponseDto> particles,int aqi) {
         super();
         this.date = date;
         this.municipality = municipality;
         this.particles = particles;
+        this.aqi = aqi;
     }
 
     /**
@@ -47,6 +51,7 @@ public class AirQualityReponseDto {
         this.date = airQuality.getDate();
         this.municipality = new MunicipalityResponseDto(airQuality.getMunicipality());
         this.particles = airQuality.getParticles().stream().map(ParticleResponseDto::new).toList();
+        this.aqi = airQuality.getAqi();
     }
 
     /**
@@ -102,4 +107,22 @@ public class AirQualityReponseDto {
     public void setParticles(List<ParticleResponseDto> particles) {
         this.particles = particles;
     }
+
+	/** Get the aqi
+	 * @return the aqi
+	 */
+	public int getAqi() {
+		return aqi;
+	}
+
+	/** Set the aqi
+	 * @param aqi the aqi to set
+	 */
+	public void setAqi(int aqi) {
+		this.aqi = aqi;
+	}
+    
+    
+    
+    
 }

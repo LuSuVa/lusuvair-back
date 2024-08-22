@@ -75,7 +75,7 @@ public class AirQualityController {
                      content = {@Content(mediaType ="application/json", schema = @Schema(implementation = AirQuality.class))})
     })
     @GetMapping("/municipality/name/{name}")
-    public ResponseEntity<?> getWeatherByMunicipalityName(@PathVariable String name) {
+    public ResponseEntity<?> getByMunicipalityName(@PathVariable String name) {
         return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getByMunicipalityName(name)));
     } 
 }
