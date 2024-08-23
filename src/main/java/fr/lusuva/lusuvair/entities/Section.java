@@ -41,11 +41,7 @@ public class Section {
     @Column(name = "DATE")
     private LocalDateTime date;
 
-    /** The forum to which the section belongs */
-    @ManyToOne
-    @JoinColumn(name = "ID_FORUM")
-    private Forum forum;
-
+    
     /** The user who created the section */
     @ManyToOne
     @JoinColumn(name = "ID_USER")
@@ -137,23 +133,7 @@ public class Section {
         this.date = date;
     }
 
-    /**
-     * Gets the forum to which the section belongs.
-     *
-     * @return the forum
-     */
-    public Forum getForum() {
-        return forum;
-    }
 
-    /**
-     * Sets the forum to which the section belongs.
-     *
-     * @param forum the new forum
-     */
-    public void setForum(Forum forum) {
-        this.forum = forum;
-    }
 
     /**
      * Gets the user who created the section.

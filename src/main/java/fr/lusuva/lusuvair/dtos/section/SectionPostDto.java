@@ -21,11 +21,7 @@ public class SectionPostDto {
     @Size(min = 4, max = 1024)
     private String content;
 
-    /**
-     * Forum's id
-     */
-    @NotNull
-    private int forumId;
+
 
     /**
      * Empty constructor
@@ -41,11 +37,11 @@ public class SectionPostDto {
      * @param content String
      * @param forumId int
      */
-    public SectionPostDto(String title, String content, int forumId) {
+    public SectionPostDto(String title, String content) {
         super();
         this.title = title;
         this.content = content;
-        this.forumId = forumId;
+       
     }
 
     /**
@@ -66,13 +62,6 @@ public class SectionPostDto {
         return content;
     }
 
-    /**
-     * Get forum's id
-     * @return int
-     */
-    public int getForumId() {
-        return forumId;
-    }
 
     /**
      * Set title
@@ -92,11 +81,5 @@ public class SectionPostDto {
         this.content = content;
     }
 
-    /**
-     * Set forum's id
-     * @param forumId
-     */
-    public void setForumId(int forumId) {
-        this.forumId = forumId;
-    }
+
 }
