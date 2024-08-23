@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,7 @@ public class AirQualityController {
      * @param id the ID of the AirQuality entity to be retrieved
      * @return ResponseEntity containing the AirQualityReponseDto object and a status of 200 OK
      */
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getById(id)));
@@ -74,6 +76,7 @@ public class AirQualityController {
                      description = "Municipality's air quality data in JSON format",
                      content = {@Content(mediaType ="application/json", schema = @Schema(implementation = AirQuality.class))})
     })
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/municipality/name/{name}")
     public ResponseEntity<?> getByMunicipalityName(@PathVariable String name) {
              Object result = airQualityService.getByMunicipalityName(name);
