@@ -1,5 +1,6 @@
 package fr.lusuva.lusuvair.controllers;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.lusuva.lusuvair.dtos.AirQuality.AirQualityReponseDto;
-import fr.lusuva.lusuvair.dtos.weather.WeatherResponseDto;
 import fr.lusuva.lusuvair.entities.AirQuality;
-import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.services.AirQualityService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.NonUniqueResultException;
 
 /**
  * Rest Controller for managing {@code AirQuality} entities.
@@ -76,6 +76,21 @@ public class AirQualityController {
     })
     @GetMapping("/municipality/name/{name}")
     public ResponseEntity<?> getByMunicipalityName(@PathVariable String name) {
-        return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getByMunicipalityName(name)));
+             Object result = airQualityService.getByMunicipalityName(name);
+
+             if (result instanceof AirQuality[]) {
+                 AirQuality[] resultArray = (AirQuality[]) result;
+
+                 if (resultArray.length > 0) {
+                     return ResponseEntity.ok(new AirQualityReponseDto(resultArray[0]));
+                 } else {
+                     return ResponseEntity.noContent().build();
+                 }
+             } else if (result instanceof AirQuality) {
+              
+                 return ResponseEntity.ok(new AirQualityReponseDto((AirQuality) result));
+             } else {
+                 return ResponseEntity.notFound().build();
+             }
     } 
 }
