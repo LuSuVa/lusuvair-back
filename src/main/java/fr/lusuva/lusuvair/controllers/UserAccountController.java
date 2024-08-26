@@ -104,6 +104,23 @@ public class UserAccountController {
 	}
 
 	/**
+	 * GET Route to get all users
+	 * 
+	 * @param userLoginDto UserLoginDto
+	 * @return Status OK if register, or status 400 if not valid
+	 */
+	@Operation(summary = "Get All Users")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successfully find all", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto[].class)) }),
+			@ApiResponse(responseCode = "400", description = "", content = @Content) })
+	@GetMapping("/email/{email}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getUsersByEmail() {
+		return ResponseEntity
+				.ok(userAccountRepository.findAll().stream().map(user -> new UserResponseDto(user)).toList());
+	}
+
+	/**
 	 * PATCH Route to suspend an user
 	 * 
 	 * @param int id

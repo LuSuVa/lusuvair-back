@@ -1,5 +1,8 @@
 package fr.lusuva.lusuvair.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -8,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.entities.AirQuality;
 import fr.lusuva.lusuvair.repositories.AirQualityRepository;
-import jakarta.persistence.NonUniqueResultException;
 import jakarta.transaction.Transactional;
 
 /**
@@ -73,11 +75,10 @@ public class AirQualityService {
 
 		if (airQualities.isEmpty()) {
 			throw new NoSuchElementException("No air quality data found for municipality: " + municipalityName);
-		} else if (airQualities.size() > 1) {
-			throw new NonUniqueResultException(
-					"Multiple air quality records found for municipality: " + municipalityName);
 		}
 
-		return airQualities.get(0);
+		return airQualities.stream().sorted(Comparator.comparing(
+				(AirQuality aq) -> LocalDate.parse(aq.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+				.reversed()).findFirst().orElse(null);
 	}
 }

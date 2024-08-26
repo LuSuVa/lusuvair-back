@@ -78,22 +78,6 @@ public class WeatherController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Weather.class)) }) })
 	@GetMapping("/municipality/name/{name}")
 	public ResponseEntity<?> getWeatherByMunicipalityName(@PathVariable String name) {
-		Object result = weatherService.getByMunicipalityName(name);
-
-		if (result instanceof Weather[]) {
-			Weather[] resultArray = (Weather[]) result;
-
-			if (resultArray.length > 0) {
-				return ResponseEntity.ok(new WeatherResponseDto(resultArray[0]));
-			} else {
-				return ResponseEntity.noContent().build();
-			}
-		} else if (result instanceof Weather) {
-			
-			return ResponseEntity.ok(new WeatherResponseDto((Weather) result));
-			
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+		return ResponseEntity.ok(new WeatherResponseDto(weatherService.getByMunicipalityName(name)));
 	}
 }

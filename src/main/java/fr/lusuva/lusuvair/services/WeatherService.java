@@ -1,5 +1,6 @@
 package fr.lusuva.lusuvair.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.repositories.WeatherRepository;
-import jakarta.persistence.NonUniqueResultException;
 
 /**
  * Service for managing weather data.
@@ -24,7 +24,7 @@ public class WeatherService {
      */
     @Autowired
     private WeatherRepository weatherRepository;
-    
+
     /**
      * Inserts a new Weather entity into the database.
      * 
@@ -33,7 +33,7 @@ public class WeatherService {
     public void insertNewWeather(Weather weather) {
         weatherRepository.save(weather);
     }
-    
+
     /**
      * Retrieves all Weather entities from the database.
      * 
@@ -42,13 +42,14 @@ public class WeatherService {
     public List<Weather> getAll() {
         return weatherRepository.findAll();
     }
-    
+
     /**
      * Retrieves a Weather entity by its ID.
      * 
      * @param id the ID of the Weather entity
      * @return the Weather entity with the specified ID
-     * @throws NoSuchElementException if no Weather entity with the specified ID is found
+     * @throws NoSuchElementException if no Weather entity with the specified ID is
+     *                                found
      */
     public Weather getById(int id) throws NoSuchElementException {
         Weather weather = weatherRepository.findById(id);
@@ -57,17 +58,17 @@ public class WeatherService {
         }
         return weather;
     }
-    
+
     /**
      * Updates a Weather entity with new data.
      * 
-     * @param id the ID of the Weather entity to be updated
+     * @param id         the ID of the Weather entity to be updated
      * @param newWeather the new Weather entity with updated data
      * @return the updated Weather entity
      */
-    public Weather updateById(int id, Weather newWeather){
+    public Weather updateById(int id, Weather newWeather) {
         Weather weather = getById(id);
-        
+
         weather.setAtmophericPressure(newWeather.getAtmophericPressure());
         weather.setDate(newWeather.getDate());
         weather.setDirWind(newWeather.getDirWind());
@@ -76,12 +77,12 @@ public class WeatherService {
         weather.setTemperature(newWeather.getTemperature());
         weather.setType(newWeather.getType());
         weather.setWind(newWeather.getWind());
-        
+
         weatherRepository.save(weather);
-        
+
         return weather;
     }
-    
+
     /**
      * Retrieves a Weather entity by the ID of its associated Municipality.
      * 
@@ -91,7 +92,7 @@ public class WeatherService {
     public Weather getByMunicipalityId(int idMunicipality) {
         return weatherRepository.findByMunicipalityId(idMunicipality);
     }
-    
+
     /**
      * Retrieves a Weather entity by the name of its associated Municipality.
      * 
@@ -99,20 +100,21 @@ public class WeatherService {
      * @return the Weather entity associated with the specified Municipality name
      */
     public Weather getByMunicipalityName(String name) {
-        try {
-        	return weatherRepository.findByMunicipalityName(name);
-        } catch (NonUniqueResultException e) {
-        	List<Weather> weather = weatherRepository.findByMunicipalityNameContaining(name);
-            return weather.get(0);
+        List<Weather> weathers = weatherRepository.findByMunicipalityNameContaining(name);
+
+        if (weathers.isEmpty()) {
+            throw new NoSuchElementException("No weather data found for municipality: " + name);
         }
+
+        return weathers.stream().sorted(Comparator.comparing(Weather::getDate).reversed()).findFirst().orElse(null);
     }
-    
+
     /**
      * Deletes a Weather entity by its ID.
      * 
      * @param id the ID of the Weather entity to be deleted
      */
-    public void deleteById(int id){
+    public void deleteById(int id) {
         Weather weather = getById(id);
         weatherRepository.delete(weather);
     }
