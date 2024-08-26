@@ -53,6 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (isIgnoredGetPath || isIgnoredPostPath) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
