@@ -6,12 +6,10 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.lusuva.lusuvair.entities.AirQuality;
+import fr.lusuva.lusuvair.repositories.AirQualityRepository;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.transaction.Transactional;
-
-import fr.lusuva.lusuvair.entities.AirQuality;
-import fr.lusuva.lusuvair.entities.Weather;
-import fr.lusuva.lusuvair.repositories.AirQualityRepository;
 
 /**
  * Service class for managing {@code AirQuality} entities.

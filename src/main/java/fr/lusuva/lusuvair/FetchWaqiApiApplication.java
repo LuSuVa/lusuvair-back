@@ -57,6 +57,12 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
 	private boolean apiCall;
 
 	/**
+	 * WAQI API call
+	 */
+	@Value("${waqi.api.call}")
+	private boolean waqiApiCall;
+
+	/**
 	 * Logger
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(FetchWaqiApiApplication.class);
@@ -79,7 +85,7 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		if (apiCall) {
+		if (apiCall && waqiApiCall) {
 			fetchApiForEachMunicipalities();
 		}
 	}

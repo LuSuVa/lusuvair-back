@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.lusuva.lusuvair.entities.AirQuality;
-import fr.lusuva.lusuvair.entities.Weather;
 
 /**
  * Repository interface for managing {@link AirQuality} entities.

@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.lusuva.lusuvair.dtos.AirQuality.AirQualityReponseDto;
 import fr.lusuva.lusuvair.dtos.weather.WeatherResponseDto;
-import fr.lusuva.lusuvair.entities.AirQuality;
 import fr.lusuva.lusuvair.entities.Weather;
 import fr.lusuva.lusuvair.services.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;

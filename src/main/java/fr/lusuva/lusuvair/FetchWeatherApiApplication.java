@@ -48,6 +48,12 @@ public class FetchWeatherApiApplication implements CommandLineRunner {
 	private boolean apiCall;
 
 	/**
+	 * Weather API call
+	 */
+	@Value("${weather.api.call}")
+	private boolean weatherApiCall;
+
+	/**
 	 * Service for handling operations related to municipalities.
 	 */
 	@Autowired
@@ -76,7 +82,7 @@ public class FetchWeatherApiApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		if (apiCall) {
+		if (apiCall && weatherApiCall) {
 			fetchApiForEachMunicipalities();
 		}
 	}
