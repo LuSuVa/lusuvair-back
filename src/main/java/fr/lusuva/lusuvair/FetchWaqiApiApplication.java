@@ -118,17 +118,19 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
 			List<Particle> particles = new ArrayList<>();
 
 			if (iaqi != null) {
-				particles.add(buildParticle("dew", iaqi.getDew()));
-				particles.add(buildParticle("h", iaqi.getH()));
+
 				particles.add(buildParticle("no2", iaqi.getNo2()));
 				particles.add(buildParticle("o3", iaqi.getO3()));
-				particles.add(buildParticle("p", iaqi.getP()));
 				particles.add(buildParticle("pm10", iaqi.getPm10()));
 				particles.add(buildParticle("pm25", iaqi.getPm25()));
 				particles.add(buildParticle("so2", iaqi.getSo2()));
 				particles.add(buildParticle("t", iaqi.getT()));
+				particles.add(buildParticle("h", iaqi.getH()));
+				particles.add(buildParticle("p", iaqi.getP()));
 				particles.add(buildParticle("w", iaqi.getW()));
 				particles.add(buildParticle("wg", iaqi.getWg()));
+				particles.add(buildParticle("dew", iaqi.getDew()));
+								
 			}
 
 			String date = waqiData.getDataDto().getTime().getS();
