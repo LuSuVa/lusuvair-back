@@ -115,9 +115,10 @@ public class UserAccountController {
 			@ApiResponse(responseCode = "400", description = "", content = @Content) })
 	@GetMapping("/email/{email}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> getUsersByEmail() {
+	public ResponseEntity<?> getUsersByEmail(@PathVariable String email) {
 		return ResponseEntity
-				.ok(userAccountRepository.findAll().stream().map(user -> new UserResponseDto(user)).toList());
+				.ok(userAccountRepository.findByEmailContaining(email).stream().map(user -> new UserResponseDto(user))
+						.toList());
 	}
 
 	/**
