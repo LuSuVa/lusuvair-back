@@ -119,17 +119,17 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
 
 			if (iaqi != null) {
 
-				particles.add(buildParticle("no2", iaqi.getNo2()));
-				particles.add(buildParticle("o3", iaqi.getO3()));
-				particles.add(buildParticle("pm10", iaqi.getPm10()));
-				particles.add(buildParticle("pm25", iaqi.getPm25()));
-				particles.add(buildParticle("so2", iaqi.getSo2()));
-				particles.add(buildParticle("t", iaqi.getT()));
-				particles.add(buildParticle("h", iaqi.getH()));
-				particles.add(buildParticle("p", iaqi.getP()));
-				particles.add(buildParticle("w", iaqi.getW()));
-				particles.add(buildParticle("wg", iaqi.getWg()));
-				particles.add(buildParticle("dew", iaqi.getDew()));
+				particles.add(buildParticle("no2", iaqi.getNo2(),"µg/m³"));
+				particles.add(buildParticle("o3", iaqi.getO3(),"µg/m³"));
+				particles.add(buildParticle("pm10", iaqi.getPm10(),"µg/m³"));
+				particles.add(buildParticle("pm25", iaqi.getPm25(),"µg/m³"));
+				particles.add(buildParticle("so2", iaqi.getSo2(),"µg/m³"));
+				particles.add(buildParticle("t", iaqi.getT(),"°"));
+				particles.add(buildParticle("h", iaqi.getH(),"%"));
+				particles.add(buildParticle("p", iaqi.getP(),"hpa"));
+				particles.add(buildParticle("w", iaqi.getW(),"km/h"));
+				particles.add(buildParticle("wg", iaqi.getWg(),"km/h"));
+				particles.add(buildParticle("dew", iaqi.getDew(),"°"));
 								
 			}
 
@@ -159,11 +159,12 @@ public class FetchWaqiApiApplication implements CommandLineRunner {
 	 * @param particleDto The particle data transfer object containing particle
 	 *                    information
 	 */
-	public Particle buildParticle(String key, ParticleDto particleDto) {
+	public Particle buildParticle(String key, ParticleDto particleDto,String unit) {
 		if (particleDto != null && particleDto.getV() != 0) {
 			Particle particleEntity = new Particle();
 			particleEntity.setName(key);
 			particleEntity.setQuantity(particleDto.getV());
+			particleEntity.setUnit(unit);
 			return particleEntity;
 		}
 		return null;

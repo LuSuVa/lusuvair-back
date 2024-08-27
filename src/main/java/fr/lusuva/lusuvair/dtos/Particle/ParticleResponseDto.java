@@ -10,6 +10,7 @@ public class ParticleResponseDto {
     private int id;
     private String name;
     private double quantity;
+    private String unit;
 
     /**
      * Default constructor.
@@ -28,6 +29,7 @@ public class ParticleResponseDto {
         this.id = particle.getId();
         this.name = particle.getName();
         this.quantity = particle.getQuantity();
+        this.unit = particle.getUnit();
     }
 
     /**
@@ -97,4 +99,18 @@ public class ParticleResponseDto {
     public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
+
+	/**
+	 * @return the unit
+	 */
+	public String getUnit() {
+		return unit;
+	}
+
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 }

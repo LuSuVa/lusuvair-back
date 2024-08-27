@@ -39,59 +39,70 @@ public class ApiWaqiMapper {
         List<Particle> listParticule = new ArrayList<>();
 
         // Create and add Particle entities to the list
-        Particle particleCo = new Particle();
-        particleCo.setName("co");
-        particleCo.setQuantity(waqiDataDto.getDataDto().getIaqi().getDew().getV());
-        listParticule.add(particleCo);
+        Particle particleDew = new Particle();
+        particleDew.setName("dew");
+        particleDew.setQuantity(waqiDataDto.getDataDto().getIaqi().getDew().getV());
+        particleDew.setUnit("°");
+        listParticule.add(particleDew);
 
         Particle particleH = new Particle();
         particleH.setName("h");
         particleH.setQuantity(waqiDataDto.getDataDto().getIaqi().getH().getV());
+        particleH.setUnit("%");
         listParticule.add(particleH);
 
         Particle particleNo2 = new Particle();
         particleNo2.setName("no2");
         particleNo2.setQuantity(waqiDataDto.getDataDto().getIaqi().getNo2().getV());
+        particleNo2.setUnit("µg/m³");
         listParticule.add(particleNo2);
 
         Particle particleO3 = new Particle();
         particleO3.setName("o3");
         particleO3.setQuantity(waqiDataDto.getDataDto().getIaqi().getO3().getV());
+        particleO3.setUnit("µg/m³");
         listParticule.add(particleO3);
 
         Particle particleP = new Particle();
         particleP.setName("p");
         particleP.setQuantity(waqiDataDto.getDataDto().getIaqi().getP().getV());
+        particleP.setUnit("hpa");
         listParticule.add(particleP);
 
         Particle particlePm10 = new Particle();
         particlePm10.setName("pm10");
         particlePm10.setQuantity(waqiDataDto.getDataDto().getIaqi().getPm10().getV());
+        particlePm10.setUnit("µg/m³");
         listParticule.add(particlePm10);
 
         Particle particlePm25 = new Particle();
         particlePm25.setName("pm25");
         particlePm25.setQuantity(waqiDataDto.getDataDto().getIaqi().getPm25().getV());
+        particlePm25.setUnit("µg/m³");
         listParticule.add(particlePm25);
 
         Particle particleSo2 = new Particle();
         particleSo2.setName("so2");
         particleSo2.setQuantity(waqiDataDto.getDataDto().getIaqi().getSo2().getV());
+        particleSo2.setUnit("µg/m³");
         listParticule.add(particleSo2);
 
         Particle particleT = new Particle();
         particleT.setName("t");
         particleT.setQuantity(waqiDataDto.getDataDto().getIaqi().getT().getV());
+        particleT.setUnit("°");
         listParticule.add(particleT);
 
         Particle particleW = new Particle();
         particleW.setName("w");
         particleW.setQuantity(waqiDataDto.getDataDto().getIaqi().getW().getV());
+        particleW.setUnit("km/h");
         listParticule.add(particleW);
 
         Particle particleWg = new Particle();
         particleWg.setName("wg");
         particleWg.setQuantity(waqiDataDto.getDataDto().getIaqi().getWg().getV());
+        particleWg.setUnit("km/h");
         listParticule.add(particleWg);
 
         return listParticule;

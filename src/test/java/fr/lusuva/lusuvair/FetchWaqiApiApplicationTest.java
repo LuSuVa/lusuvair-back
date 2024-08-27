@@ -52,7 +52,7 @@ public class FetchWaqiApiApplicationTest {
 		ParticleDto particleDto = new ParticleDto();
 		particleDto.setV(10.0);
 		
-		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto);
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto,"µg/m³");
 
 		assertEquals("pm10", particle.getName());
 		assertEquals(10.0, particle.getQuantity());
@@ -60,7 +60,7 @@ public class FetchWaqiApiApplicationTest {
 
 	@Test
 	public void testBuildParticle_NullParticle() {
-		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", null);
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", null,"µg/m³");
 
 		assertTrue(particle == null);
 	}
@@ -70,7 +70,7 @@ public class FetchWaqiApiApplicationTest {
 		ParticleDto particleDto = new ParticleDto();
 		particleDto.setV(0.0);
 
-		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto);
+		Particle particle = fetchWaqiApiApplication.buildParticle("pm10", particleDto,"µg/m³");
 
 		assertTrue(particle == null);
 	}

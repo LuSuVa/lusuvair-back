@@ -37,6 +37,12 @@ public class Particle {
 	 */
 	@Column(name = "QUANTITY")
 	private double quantity;
+	
+	/**
+	 * double: quantity
+	 */
+	@Column(name = "UNIT")
+	private String unit;
 
 	/**
 	 * List of favorite indicators
@@ -145,6 +151,20 @@ public class Particle {
 	public String toString() {
 		return "Particle [id=" + id + ", quantity=" + quantity + ", name=" + name + ", favoriteIndicators="
 				+ favoriteIndicators + ", airQualities=" + airQualities + "]";
+	}
+
+	/**
+	 * @return the unit
+	 */
+	public String getUnit() {
+		return unit;
+	}
+
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 }
