@@ -52,10 +52,10 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN",
-				"ROLE_USER"));
-		create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
-		create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+		// create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN",
+		// 		"ROLE_USER"));
+		// create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+		// create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
 
 	/**
