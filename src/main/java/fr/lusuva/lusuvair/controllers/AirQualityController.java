@@ -22,7 +22,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 /**
  * Rest Controller for managing {@code AirQuality} entities.
  * 
- * This controller provides endpoints to retrieve AirQuality data from the database.
+ * This controller provides endpoints to retrieve AirQuality data from the
+ * database.
  */
 @RestController
 @RequestMapping("/airQualities")
@@ -36,7 +37,8 @@ public class AirQualityController {
      * 
      * Retrieves a list of all AirQuality entities from the database.
      * 
-     * @return ResponseEntity containing the list of AirQualityReponseDto objects and a status of 200 OK
+     * @return ResponseEntity containing the list of AirQualityReponseDto objects
+     *         and a status of 200 OK
      */
     @Operation(summary = "Get all airQualities")
     @ApiResponses(value = {
@@ -54,14 +56,15 @@ public class AirQualityController {
      * Retrieves an AirQuality entity by its ID.
      * 
      * @param id the ID of the AirQuality entity to be retrieved
-     * @return ResponseEntity containing the AirQualityReponseDto object and a status of 200 OK
+     * @return ResponseEntity containing the AirQualityReponseDto object and a
+     *         status of 200 OK
      */
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getById(id)));
     }
-    
+
     /**
      * Get air quality data of a municipality by its name
      *
@@ -70,28 +73,12 @@ public class AirQualityController {
      */
     @Operation(summary = "Get the air quality data of the municipality by its name")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200",
-                     description = "Municipality's air quality data in JSON format",
-                     content = {@Content(mediaType ="application/json", schema = @Schema(implementation = AirQuality.class))})
+            @ApiResponse(responseCode = "200", description = "Municipality's air quality data in JSON format", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = AirQuality.class)) })
     })
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/municipality/name/{name}")
     public ResponseEntity<?> getByMunicipalityName(@PathVariable String name) {
-             Object result = airQualityService.getByMunicipalityName(name);
-
-             if (result instanceof AirQuality[]) {
-                 AirQuality[] resultArray = (AirQuality[]) result;
-
-                 if (resultArray.length > 0) {
-                     return ResponseEntity.ok(new AirQualityReponseDto(resultArray[0]));
-                 } else {
-                     return ResponseEntity.noContent().build();
-                 }
-             } else if (result instanceof AirQuality) {
-              
-                 return ResponseEntity.ok(new AirQualityReponseDto((AirQuality) result));
-             } else {
-                 return ResponseEntity.notFound().build();
-             }
-    } 
+        return ResponseEntity.ok(new AirQualityReponseDto(airQualityService.getByMunicipalityName(name)));
+    }
 }

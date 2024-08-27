@@ -12,6 +12,11 @@ public class JwtAuthenticationResponse {
     private String token;
 
     /**
+     * User"s id
+     */
+    private int id;
+
+    /**
      * User role
      */
     private List<String> role;
@@ -28,9 +33,10 @@ public class JwtAuthenticationResponse {
      * 
      * @param token String
      */
-    public JwtAuthenticationResponse(String token, List<String> role) {
+    public JwtAuthenticationResponse(String token, int id, List<String> role) {
         super();
         this.token = token;
+        this.id = id;
         this.role = role;
     }
 
@@ -68,5 +74,21 @@ public class JwtAuthenticationResponse {
      */
     public void setRole(List<String> role) {
         this.role = role;
+    }
+
+    /**
+     * Get id
+     * @return int id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Set id
+     * @param id int id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

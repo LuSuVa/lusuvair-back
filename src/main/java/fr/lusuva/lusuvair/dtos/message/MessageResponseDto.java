@@ -1,9 +1,11 @@
 package fr.lusuva.lusuvair.dtos.message;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import fr.lusuva.lusuvair.dtos.user.UserResponseDto;
 import fr.lusuva.lusuvair.entities.Message;
+import fr.lusuva.lusuvair.entities.UserAccount;
 
 /**
  * Data Transfer Object (DTO) for transferring message data between processes.
@@ -38,9 +40,19 @@ public class MessageResponseDto {
     private int like;
 
     /**
+     * User ids that has liked
+     */
+    private List<Integer> likeUserIds;
+
+    /**
      * Number of dislikes received by the message.
      */
     private int dislike;
+
+    /**
+     * User ids that has disliked
+     */
+    private List<Integer> dislikeUserIds;
 
     /**
      * Identifier of the parent message, if any.
@@ -63,10 +75,12 @@ public class MessageResponseDto {
         this.content = message.getContent();
         this.date = message.getDate();
         this.like = message.getUsersLiked().size();
+        this.likeUserIds = message.getUsersLiked().stream().map(UserAccount::getId).toList();
         this.dislike = message.getUsersDisliked().size();
+        this.dislikeUserIds = message.getUsersDisliked().stream().map(UserAccount::getId).toList();
         this.user = new UserResponseDto(message.getUser());
 
-        if(message.getParentMessage() != null){
+        if (message.getParentMessage() != null) {
             this.parentMessageId = message.getParentMessage().getId();
         }
     }
@@ -196,5 +210,37 @@ public class MessageResponseDto {
      */
     public void setUser(UserResponseDto user) {
         this.user = user;
+    }
+
+    /**
+     * Get user's ids that has liked this message
+     * @return List of ids
+     */
+    public List<Integer> getLikeUserIds() {
+        return likeUserIds;
+    }
+
+    /**
+     * Set user's ids that has liked this message
+     * @param likeUserIds
+     */
+    public void setLikeUserIds(List<Integer> likeUserIds) {
+        this.likeUserIds = likeUserIds;
+    }
+
+    /**
+     * Get user's ids that has disliked this message
+     * @return List of ids
+     */
+    public List<Integer> getDislikeUserIds() {
+        return dislikeUserIds;
+    }
+
+    /**
+     * Set user's ids that has disliked this message
+     * @param dislikeUserIds
+     */
+    public void setDislikeUserIds(List<Integer> dislikeUserIds) {
+        this.dislikeUserIds = dislikeUserIds;
     }
 }

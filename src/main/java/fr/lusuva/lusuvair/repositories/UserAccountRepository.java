@@ -1,5 +1,7 @@
 package fr.lusuva.lusuvair.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.lusuva.lusuvair.entities.UserAccount;
@@ -18,4 +20,12 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
      * @return the {@link UserAccount} with the specified email, or {@code null} if none found
      */
     UserAccount findByEmail(String email);
+
+    /**
+     * Finds all {@link UserAccount} by email containing
+     * 
+     * @param email the email searched
+     * @return List of {@link UserAccount} with the email containing the searched
+     */
+    List<UserAccount> findByEmailContaining(String email);
 }

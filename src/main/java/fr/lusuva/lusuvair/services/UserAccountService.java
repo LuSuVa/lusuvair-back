@@ -63,8 +63,8 @@ public class UserAccountService {
 	 * 
 	 * @param user
 	 */
-	public void create(UserAccount user) {
-		userAccountRepository.save(user);
+	public UserAccount create(UserAccount user) {
+		return userAccountRepository.save(user);
 	}
 
 	/**
@@ -85,12 +85,12 @@ public class UserAccountService {
 				passwordEncoder.encode(userRegisterDto.getPassword()),
 				"ROLE_USER");
 
-		create(userAccount);
+		var user = create(userAccount);
 
 		var jwt = jwtService.generateToken(userAccount.getEmail());
 		List<String> roles = userAccount.getAuthorities().stream().map(authority -> authority.getAuthority()).toList();
 
-		return new JwtAuthenticationResponse(jwt, roles);
+		return new JwtAuthenticationResponse(jwt, user.getId(), roles);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class UserAccountService {
 		String jwt = jwtService.generateToken(UserMapper.toUserDetails(user).getUsername());
 		List<String> roles = user.getAuthorities().stream().map(authority -> authority.getAuthority()).toList();
 
-		return new JwtAuthenticationResponse(jwt, roles);
+		return new JwtAuthenticationResponse(jwt, user.getId(), roles);
 	}
 
 	/**
