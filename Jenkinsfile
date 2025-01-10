@@ -21,7 +21,7 @@ pipeline {
        sh 'mvn test'
      }
     }  
-    stage('SonarQube Analysis') {
+    stage('Deploy') {
      steps {
        script {
         def mvnHome = tool 'Maven 3.9.6' //
