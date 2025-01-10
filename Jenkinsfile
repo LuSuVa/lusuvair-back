@@ -25,7 +25,7 @@ pipeline {
        script {
         def mvnHome = tool 'Maven 3.9.6' //
         withSonarQubeEnv('SonarQ') {
-        sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=LuSuVair -Dsonar.projectName='LuSuVair'"
+        sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=lusuvair-back -Dsonar.projectName='lusuvair-back'"
        }
       }
      }   
