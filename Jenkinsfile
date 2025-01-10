@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage ('checkout'){
       steps {
-       git 'https://github.com/LuSuVa/lusuvair-back'
+       git 'https://github.com/LuSuVa/lusuvair-back.git'
       }  
     }
     stage ('Build') {
