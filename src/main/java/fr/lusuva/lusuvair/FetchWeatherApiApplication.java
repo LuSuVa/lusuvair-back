@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +26,7 @@ import fr.lusuva.lusuvair.services.WeatherService;
  * The FetchApiWeatherApplication class fetches weather data from the Meteo
  * Concept API. It stores relevant weather information in a database.
  */
-@SpringBootApplication
+@Configuration
 @EnableScheduling
 public class FetchWeatherApiApplication implements CommandLineRunner {
 
