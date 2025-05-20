@@ -41,6 +41,7 @@ public class SecurityConfig {
 			new AntPathRequestMatcher("/login"),
 			new AntPathRequestMatcher("/user/login"),
 			new AntPathRequestMatcher("/user/register"),
+			new AntPathRequestMatcher("/user/getEmails"),
 			new AntPathRequestMatcher("/forums"),
 			new AntPathRequestMatcher("/forums/**"),
 			new AntPathRequestMatcher("/sections"),
@@ -50,7 +51,8 @@ public class SecurityConfig {
 
 	public static final List<RequestMatcher> ignoredPostPaths = new ArrayList<RequestMatcher>(Arrays.asList(
 			new AntPathRequestMatcher("/user/login"),
-			new AntPathRequestMatcher("/user/register")));
+			new AntPathRequestMatcher("/user/register"),
+			new AntPathRequestMatcher("/user/getEmails")));
 
 	/**
 	 * Cors Configuration Source
@@ -135,6 +137,7 @@ public class SecurityConfig {
 						"/login",
 						"/user/login",
 						"/user/register",
+						"/user/getEmails",
 						"/forums",
 						"/forums/**",
 						"/sections",

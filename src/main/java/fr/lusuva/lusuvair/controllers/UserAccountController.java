@@ -156,7 +156,6 @@ public class UserAccountController {
 	}
 	
 	@GetMapping("/getEmails")
-	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getEmails(){
 		return ResponseEntity.ok(userAccountService.findEmails());
 	}
