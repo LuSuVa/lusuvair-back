@@ -52,10 +52,10 @@ public class UserAccountService {
 	 */
 	@PostConstruct
 	public void init() {
-		// create(new UserAccount("Dobole", "Lusuva", "admin5@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN",
+		//create(new UserAccount("Doboles", "Lusuvas", "admin6@test.com", passwordEncoder.encode("admin"), "ROLE_ADMIN",
 		// 		"ROLE_USER"));
-		// create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
-		// create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+		//create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+		//create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 	}
 
 	/**
@@ -156,5 +156,10 @@ public class UserAccountService {
 		userAccountRepository.save(user);
 
 		return user;
+	}
+
+	public List<String> findEmails() {
+		
+		return userAccountRepository.findAll().stream().map(u -> u.getEmail()).toList();
 	}
 }

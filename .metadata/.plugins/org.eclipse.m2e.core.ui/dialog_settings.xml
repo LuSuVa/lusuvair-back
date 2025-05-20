@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\lucas\OneDrive\Documents\Cours\CDA\PROJETAIR"/>
+			<item value="C:\Users\lucas\OneDrive\Documents\Cours\CDA\PROJETAIR\lusuvair-back"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>
