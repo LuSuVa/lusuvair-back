@@ -28,4 +28,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
      * @return List of {@link UserAccount} with the email containing the searched
      */
     List<UserAccount> findByEmailContaining(String email);
+
+    List<UserAccount> findAllByEmail(String email);
 }

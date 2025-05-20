@@ -74,7 +74,7 @@ public class UserAccountService {
 	 * @throws IllegalArgumentException if an user is already using this email
 	 */
 	public JwtAuthenticationResponse register(UserRegisterDto userRegisterDto) throws IllegalArgumentException {
-		if (userAccountRepository.findByEmail(userRegisterDto.getEmail()) != null) {
+		if (!userAccountRepository.findAllByEmail(userRegisterDto.getEmail()).isEmpty()) {
 			throw new IllegalArgumentException("Email is already used");
 		}
 
