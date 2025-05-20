@@ -154,4 +154,10 @@ public class UserAccountController {
 	public ResponseEntity<?> unsuspendUser(@PathVariable int id) {
 		return ResponseEntity.ok(new UserResponseDto(userAccountService.unsuspend(id)));
 	}
+	
+	@GetMapping("/getEmails")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> getEmails(){
+		return ResponseEntity.ok(userAccountService.findEmails());
+	}
 }
