@@ -56,6 +56,7 @@ public class UserAccountService {
 		// 		"ROLE_USER"));
 		//create(new UserAccount("user", "user", "user@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
 		//create(new UserAccount("user", "user", "user2@test.com", passwordEncoder.encode("user"), "ROLE_USER"));
+
 	}
 
 	/**
